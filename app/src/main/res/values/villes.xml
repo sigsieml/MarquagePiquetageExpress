@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="villes">
+        <item>ALLEUDS</item>
+        <item>ALLONNES</item>
+        <item>AMBILLOU CHATEAU</item>
+        <item>ANDARD</item>
+        <item>ANDIGNE</item>
+        <item>ANDREZE</item>
+        <item>ANGERS</item>
+        <item>ANGERS LOIRE METROPOLE</item>
+        <item>ANGRIE</item>
+        <item>ANTOIGNE</item>
+        <item>ARMAILLE</item>
+        <item>ARTANNES S/ THOUET</item>
+        <item>AUBIGNE S/ LAYON</item>
+        <item>AUVERSE</item>
+        <item>AVIRE</item>
+        <item>AVRILLE</item>
+        <item>BARACE</item>
+        <item>BAUGE</item>
+        <item>BAUGE EN ANJOU</item>
+        <item>BAUNE</item>
+        <item>BEAUCOUZE</item>
+        <item>BEAUFORT EN ANJOU</item>
+        <item>BEAUFORT EN VALLEE</item>
+        <item>BEAULIEU SUR LAYON</item>
+        <item>BEAUPREAU</item>
+        <item>BEAUPREAU EN MAUGES</item>
+        <item>BEAUSSE</item>
+        <item>BEAUVAU</item>
+        <item>BECON LES GRANITS</item>
+        <item>BEGROLLES EN MAUGES</item>
+        <item>BEHUARD</item>
+        <item>BELLEVIGNE EN LAYON</item>
+        <item>BELLEVIGNE-LES-CHATEAUX</item>
+        <item>BLAISON GOHIER</item>
+        <item>BLAISON SAINT SULPICE</item>
+        <item>BLOU</item>
+        <item>BOCE</item>
+        <item>BOHALLE</item>
+        <item>BOISSIERE S/ EVRE</item>
+        <item>BOTZ EN MAUGES</item>
+        <item>BOUCHEMAINE</item>
+        <item>BOUILLE MENARD</item>
+        <item>BOURG D\'IRE</item>
+        <item>BOURG L\'EVEQUE</item>
+        <item>BOURGNEUF EN MAUGES</item>
+        <item>BOUZILLE</item>
+        <item>BRAIN S/ ALLONNES</item>
+        <item>BRAIN S/ L\'AUTHION</item>
+        <item>BRAIN S/ LONGUENEE</item>
+        <item>BREIL</item>
+        <item>BREILLE LES PINS</item>
+        <item>BREZE</item>
+        <item>BRIGNE S/ LAYON</item>
+        <item>BRIOLLAY</item>
+        <item>BRION</item>
+        <item>BRISSAC LOIRE AUBANCE</item>
+        <item>BRISSAC QUINCE</item>
+        <item>BRISSARTHE</item>
+        <item>BROC</item>
+        <item>BROSSAY</item>
+        <item>CANDE</item>
+        <item>CANTENAY EPINARD</item>
+        <item>CARBAY</item>
+        <item>CERNUSSON</item>
+        <item>CERQUEUX</item>
+        <item>CERQUEUX S/PASSAVANT</item>
+        <item>CHACE</item>
+        <item>CHALLAIN LA POTHERIE</item>
+        <item>CHALONNES S/ LE LUDE</item>
+        <item>CHALONNES S/ LOIRE</item>
+        <item>CHAMBELLAY</item>
+        <item>CHAMP S/ LAYON</item>
+        <item>CHAMPIGNE</item>
+        <item>CHAMPTEUSSE S/ BACONNE</item>
+        <item>CHAMPTOCE S/ LOIRE</item>
+        <item>CHAMPTOCEAUX</item>
+        <item>CHANTELOUP LES BOIS</item>
+        <item>CHANZEAUX</item>
+        <item>CHAPELLE DU GENET</item>
+        <item>CHAPELLE HULLIN</item>
+        <item>CHAPELLE ROUSSELIN</item>
+        <item>CHAPELLE S/ OUDON</item>
+        <item>CHAPELLE ST FLORENT</item>
+        <item>CHAPELLE ST LAUD</item>
+        <item>CHARCE St ELLIER S/AUBANCE</item>
+        <item>CHARTRENE</item>
+        <item>CHATEAUNEUF S/SARTHE</item>
+        <item>CHATELAIS</item>
+        <item>CHAUDEFONDS S/LAYON</item>
+        <item>CHAUDRON EN MAUGES</item>
+        <item>CHAUMONT D\'ANJOU</item>
+        <item>CHAUSSAIRE</item>
+        <item>CHAVAGNES LES EAUX</item>
+        <item>CHAVAIGNES</item>
+        <item>CHAZE HENRY</item>
+        <item>CHAZE S/ ARGOS</item>
+        <item>CHEFFES</item>
+        <item>CHEMELLIER</item>
+        <item>CHEMILLE</item>
+        <item>CHEMILLE EN ANJOU</item>
+        <item>CHEMILLE-MELAY</item>
+        <item>CHEMIRE S/ SARTHE</item>
+        <item>CHENEHUTTE TREVES CUNAULT</item>
+        <item>CHENILLE CHAMPTEUSSE</item>
+        <item>CHENILLE CHANGE</item>
+        <item>CHERRE</item>
+        <item>CHEVIRE LE ROUGE</item>
+        <item>CHIGNE</item>
+        <item>CHOLET</item>
+        <item>CIZAY LA MADELEINE</item>
+        <item>CLEFS</item>
+        <item>CLEFS-VAL D\'ANJOU</item>
+        <item>CLERE S/ LAYON</item>
+        <item>COMBREE</item>
+        <item>CONCOURSON S/ LAYON</item>
+        <item>CONTIGNE</item>
+        <item>CORNE</item>
+        <item>CORNILLE LES CAVES</item>
+        <item>CORON</item>
+        <item>CORZE</item>
+        <item>COSSE D\'ANJOU</item>
+        <item>COUDRAY MACOUARD</item>
+        <item>COURCHAMPS</item>
+        <item>COURLEON</item>
+        <item>COUTURES</item>
+        <item>CUON</item>
+        <item>DAGUENIERE</item>
+        <item>DAUMERAY</item>
+        <item>DENEE</item>
+        <item>DENEZE SOUS DOUE</item>
+        <item>DENEZE SOUS LE LUDE</item>
+        <item>DISTRE</item>
+        <item>DOUE EN ANJOU</item>
+        <item>DOUE LA FONTAINE</item>
+        <item>DRAIN</item>
+        <item>DURTAL</item>
+        <item>ECHEMIRE</item>
+        <item>ECOUFLANT</item>
+        <item>ECUILLE</item>
+        <item>ERDRE EN ANJOU</item>
+        <item>ETRICHE</item>
+        <item>FAVERAYE MACHELLES</item>
+        <item>FAYE D\'ANJOU</item>
+        <item>FENEU</item>
+        <item>FERRIERE DE FLEE</item>
+        <item>FIEF SAUVIN</item>
+        <item>FONTAINE GUERIN</item>
+        <item>FONTAINE MILON</item>
+        <item>FONTEVRAUD L\'ABBAYE</item>
+        <item>FORGES</item>
+        <item>FOSSE DE TIGNE</item>
+        <item>FOUGERE</item>
+        <item>FREIGNE</item>
+        <item>FUILET</item>
+        <item>GEE</item>
+        <item>GENE</item>
+        <item>GENNES</item>
+        <item>GENNES VAL DE LOIRE</item>
+        <item>GENNETEIL</item>
+        <item>GESTE</item>
+        <item>GREZ NEUVILLE</item>
+        <item>GREZILLE</item>
+        <item>GRUGE L\'HOPITAL</item>
+        <item>GUEDENIAU</item>
+        <item>HOTELLERIE DE FLEE</item>
+        <item>HUILLE</item>
+        <item>HUILLE LEZIGNE</item>
+        <item>HUILLE LEZIGNE</item>
+        <item>HUILLE LEZIGNE</item>
+        <item>INGRANDES LE FRESNE SUR LOIRE</item>
+        <item>INGRANDES S/ LOIRE</item>
+        <item>JAILLE YVON</item>
+        <item>JALLAIS</item>
+        <item>JARZE</item>
+        <item>JARZE VILLAGES</item>
+        <item>JARZE VILLAGES</item>
+        <item>JUBAUDIERE</item>
+        <item>JUIGNE S/ LOIRE</item>
+        <item>JUMELLIERE</item>
+        <item>JUVARDEIL</item>
+        <item>LA CORNUAILLE</item>
+        <item>LA MENITRE</item>
+        <item>LANDE CHASLES</item>
+        <item>LANDEMONT</item>
+        <item>LASSE</item>
+        <item>LE FRESNE SUR LOIRE</item>
+        <item>LE LION D\'ANGERS</item>
+        <item>LE LOUROUX BECONNAIS</item>
+        <item>LE VOIDE</item>
+        <item>LES BOIS D\'ANJOU</item>
+        <item>LES GARENNES SUR LOIRE</item>
+        <item>LES HAUTS D\'ANJOU</item>
+        <item>LEZIGNE</item>
+        <item>LINIERES BOUTON</item>
+        <item>LION D\'ANGERS</item>
+        <item>LIRE</item>
+        <item>LOIRE</item>
+        <item>LOIRE AUTHION</item>
+        <item>LONGERON</item>
+        <item>LONGUE JUMELLES</item>
+        <item>LONGUENEE EN ANJOU</item>
+        <item>LOUERRE</item>
+        <item>LOURESSE ROCHEMENIER</item>
+        <item>LOUVAINES</item>
+        <item>LUE EN BAUGEOIS</item>
+        <item>LUIGNE</item>
+        <item>LYS HAUT LAYON</item>
+        <item>MARANS</item>
+        <item>MARCE</item>
+        <item>MARIGNE</item>
+        <item>MARILLAIS</item>
+        <item>MARTIGNE BRIAND</item>
+        <item>MAUGES SUR LOIRE</item>
+        <item>MAULEVRIER</item>
+        <item>MAY SUR EVRE</item>
+        <item>MAZE</item>
+        <item>MAZE MILON</item>
+        <item>MAZIERES EN MAUGES</item>
+        <item>MEIGNANNE</item>
+        <item>MEIGNE LE VICOMTE</item>
+        <item>MEIGNE SOUS DOUE</item>
+        <item>MELAY</item>
+        <item>MEMBROLLE S/LONGUENEE</item>
+        <item>MEON</item>
+        <item>MESNIL EN VALLEE</item>
+        <item>MIRE</item>
+        <item>MONTFAUCON - MONTIGNE</item>
+        <item>MONTFORT</item>
+        <item>MONTGUILLON</item>
+        <item>MONTIGNE LES RAIRIES</item>
+        <item>MONTIGNE S/ MOINE</item>
+        <item>MONTILLIERS</item>
+        <item>MONTJEAN S/ LOIRE</item>
+        <item>MONTPOLLIN</item>
+        <item>MONTREUIL BELLAY</item>
+        <item>MONTREUIL JUIGNE</item>
+        <item>MONTREUIL S/ LOIR</item>
+        <item>MONTREUIL S/ MAINE</item>
+        <item>Montrevault</item>
+        <item>MONTREVAULT SUR EVRE</item>
+        <item>MONTSOREAU</item>
+        <item>MORANNES</item>
+        <item>MORANNES SUR SARTHE</item>
+        <item>MORANNES SUR SARTHE DAUMERAY</item>
+        <item>MOULIHERNE</item>
+        <item>MOZE SUR LOUET</item>
+        <item>MURS ERIGNE</item>
+        <item>NEUILLE</item>
+        <item>NEUVY EN MAUGES</item>
+        <item>NOELLET</item>
+        <item>NOTRE DAME D\'ALLENCON</item>
+        <item>NOYANT</item>
+        <item>NOYANT LA GRAVOYERE</item>
+        <item>NOYANT LA PLAINE</item>
+        <item>NOYANT VILLAGES</item>
+        <item>NUAILLE</item>
+        <item>NUEIL S/ LAYON</item>
+        <item>NYOISEAU</item>
+        <item>OMBREE D\'ANJOU</item>
+        <item>OREE D\'ANJOU</item>
+        <item>PARCAY LES PINS</item>
+        <item>PARNAY</item>
+        <item>PASSAVANT S/ LAYON</item>
+        <item>PELLERINE</item>
+        <item>PELLOUAILLES LES VIGNES</item>
+        <item>PIN EN MAUGES</item>
+        <item>PLAINE</item>
+        <item>PLESSIS GRAMMOIRE</item>
+        <item>PLESSIS MACE</item>
+        <item>POITEVINIERE</item>
+        <item>POMMERAYE (LA)</item>
+        <item>PONTIGNE</item>
+        <item>PONTS DE CE (LES)</item>
+        <item>POSSONNIERE</item>
+        <item>POUANCE</item>
+        <item>POUEZE</item>
+        <item>PREVIERE</item>
+        <item>PRUILLE</item>
+        <item>PUISET DORE</item>
+        <item>PUY NOTRE DAME</item>
+        <item>QUERRE</item>
+        <item>RABLAY S/ LAYON</item>
+        <item>RAIRIES</item>
+        <item>RENAUDIERE</item>
+        <item>RIVES-DU-LOIR-EN-ANJOU</item>
+        <item>ROCHEFORT S/ LOIRE</item>
+        <item>ROMAGNE</item>
+        <item>ROSIERS SUR LOIRE</item>
+        <item>ROU MARSON</item>
+        <item>ROUSSAY</item>
+        <item>SAINT HILAIRE DU BOIS</item>
+        <item>SALLE DE VIHIERS</item>
+        <item>SALLE ET CHAPELLE AUBRY</item>
+        <item>SARRIGNE</item>
+        <item>SAULGE L\'HOPITAL</item>
+        <item>SAUMUR</item>
+        <item>SAVENNIERES</item>
+        <item>SCEAUX D\'ANJOU</item>
+        <item>SEGRE</item>
+        <item>SEGRE EN ANJOU BLEU</item>
+        <item>SEGUINIERE (LA)</item>
+        <item>SEICHES S/ LE LOIR</item>
+        <item>SERMAISE</item>
+        <item>SEVREMOINE</item>
+        <item>SOEURDRES</item>
+        <item>SOMLOIRE</item>
+        <item>SOUCELLES</item>
+        <item>SOULAINES S/AUBANCE</item>
+        <item>SOULAIRE ET BOURG</item>
+        <item>SOUZAY CHAMPIGNY</item>
+        <item>St ANDRE DE LA MARCHE</item>
+        <item>St AUBIN DE LUIGNE</item>
+        <item>St AUGUSTIN DES BOIS</item>
+        <item>St BARTHELEMY D\'ANJOU</item>
+        <item>St CHRISTOPHE DU BOIS</item>
+        <item>St CHRISTOPHE LA COUPERIE</item>
+        <item>St CLEMENT DE LA PLACE</item>
+        <item>St CLEMENT DES LEVEES</item>
+        <item>St CRESPIN S/ MOINE</item>
+        <item>St CYR EN BOURG</item>
+        <item>St FLORENT LE VIEIL</item>
+        <item>St GEORGES DES GARDES</item>
+        <item>St GEORGES DES SEPT VOIES</item>
+        <item>St GEORGES DU BOIS</item>
+        <item>St GEORGES S/LAYON</item>
+        <item>St GEORGES S/LOIRE</item>
+        <item>St GERMAIN DES PRES</item>
+        <item>St GERMAIN S/MOINE</item>
+        <item>St JEAN DE LA CROIX</item>
+        <item>St JEAN DE LINIERES</item>
+        <item>St JEAN DES MAUVRETS</item>
+        <item>St JUST S/ DIVE</item>
+        <item>St LAMBERT DU LATTAY</item>
+        <item>St LAMBERT LA POTHERIE</item>
+        <item>St LAURENT DE LA PLAINE</item>
+        <item>St LAURENT DES AUTELS</item>
+        <item>St LAURENT DU MOTTAY</item>
+        <item>ST LEGER DE LINIERES</item>
+        <item>St LEGER DES BOIS</item>
+        <item>St LEGER SOUS CHOLET</item>
+        <item>St LEZIN</item>
+        <item>St MACAIRE DU BOIS</item>
+        <item>St MACAIRE EN MAUGES</item>
+        <item>St MARTIN D\'ARCE</item>
+        <item>St MARTIN DE LA PLACE</item>
+        <item>St MARTIN DU BOIS</item>
+        <item>St MARTIN DU FOUILLOUX</item>
+        <item>St MATHURIN S/LOIRE</item>
+        <item>St MELAINE S/AUBANCE</item>
+        <item>St MICHEL ET CHANVEAUX</item>
+        <item>St PAUL DU BOIS</item>
+        <item>St PHILBERT DU PEUPLE</item>
+        <item>St PHILBERT EN MAUGES</item>
+        <item>St PIERRE MONTLIMART</item>
+        <item>St QUENTIN EN MAUGES</item>
+        <item>St QUENTIN LES BEAUREPAIRE</item>
+        <item>St REMY EN MAUGES</item>
+        <item>St REMY LA VARENNE</item>
+        <item>St SATURNIN S/LOIRE</item>
+        <item>St SAUVEUR DE FLEE</item>
+        <item>St SAUVEUR DE LANDEMONT</item>
+        <item>St SIGISMOND</item>
+        <item>St SULPICE S/LOIRE</item>
+        <item>St SYLVAIN D\'ANJOU</item>
+        <item>Ste CHRISTINE</item>
+        <item>Ste GEMMES D\'ANDIGNE</item>
+        <item>STE GEMMES S/ LOIRE</item>
+        <item>TANCOIGNE</item>
+        <item>TERRANJOU</item>
+        <item>TESSOUALLE (LA)</item>
+        <item>THORIGNE D\'ANJOU</item>
+        <item>THOUARCE</item>
+        <item>THOUREIL</item>
+        <item>TIERCE</item>
+        <item>TIGNE</item>
+        <item>TILLIERES</item>
+        <item>TORFOU</item>
+        <item>TOURLANDRY</item>
+        <item>TOUTLEMONDE</item>
+        <item>TRELAZE</item>
+        <item>TREMBLAY</item>
+        <item>TREMENTINES</item>
+        <item>TREMONT</item>
+        <item>TUFFALUN</item>
+        <item>TURQUANT</item>
+        <item>ULMES</item>
+        <item>VAL D\'ERDRE AUXENCE</item>
+        <item>VAL DU LAYON</item>
+        <item>VALANJOU</item>
+        <item>VARENNE</item>
+        <item>VARENNES S/ LOIRE</item>
+        <item>VARRAINS</item>
+        <item>VAUCHRETIEN</item>
+        <item>VAUDELNAY</item>
+        <item>VAULANDRY</item>
+        <item>VERCHERS S/ LAYON</item>
+        <item>VERGONNES</item>
+        <item>VERN D\'ANJOU</item>
+        <item>VERNANTES</item>
+        <item>VERNOIL LE FOURRIER</item>
+        <item>VERRIE</item>
+        <item>VERRIERES EN ANJOU</item>
+        <item>VEZINS</item>
+        <item>VIEIL BAUGE</item>
+        <item>VIHIERS</item>
+        <item>VILLEBERNIER</item>
+        <item>VILLEDIEU LA BLOUERE</item>
+        <item>VILLEMOISAN</item>
+        <item>VILLEVEQUE</item>
+        <item>VIVY</item>
+        <item>YZERNAY</item>
+    </string-array>
+</resources>

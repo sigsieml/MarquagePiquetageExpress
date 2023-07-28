@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">MarquagePiquetage</string>
+
+
+    <string name="feature_not_available">Fonctionnalité non disponible </string>
+    <string name="dismiss">Ignorer</string>
+    <string name="next">Suivant</string>
+    <string name="previous">Précédent</string>
+    <string name="done">Terminé</string>
+    <string name="back">Retour</string>
+    <string name="close">Fermer</string>
+    <string name="question_count">\u00A0of %d</string>
+    <string name="survey_result_title">Marquage Piquetage</string>
+    <string name="survey_result_subtitle">Félicitations, vous avez terminé l\'attestation</string>
+    <string name="survey_result_description">"L'attestation de marquage piquetage va être maintenant envoyé par mail au sieml "</string>
+    <string name="questionNOperation">N° d\'opération</string>
+    <string name="questionLibelleChantier">Libellé Chantier</string>
+    <string name="questionTitulaire">Titulaire(Entreprise)</string>
+    <string name="questionNomSignataire">Nom du signataire</string>
+    <string name="questionNumRue">N°</string>
+    <string name="questionRue">Rue ou Lieu-dit</string>
+    <string name="questionCommune">Commune</string>
+    <string name="questionAttestation">Attestation</string>
+    <string name="questionAttestationDirections">"Remplissez tous les champs "</string>
+    <string name="questionAdresse">Adresse</string>
+    <string name="questionAdresseDirections">Remplissez tous les champs</string>
+    <string name="questionDateTitle">Date</string>
+    <string name="questionDateDirections">Selectionné une date</string>
+    <string name="questionPhotoTitle">Photo</string>
+    <string name="retake_photo">reprendre la photo</string>
+    <string name="add_photo">ajouter la photo</string>
+    <string name="dtDict">DT/DICT</string>
+    <string name="recepisseDesDict">Récépissés des DICT</string>
+    <string name="marquageExploitant">Marquage exploitant</string>
+    <string name="zoneMultiReseaux">Zone Multi-réseaux</string>
+    <string name="instructionsSieml">Instructions SIEML (y compris plan des travaux )</string>
+    <string name="questionElementPriseEnCompteTitle">Éléments de prise en compte pour le marquage</string>
+    <string name="select_all">Sélectionner tous ce qui correspond</string>
+
+
+
+</resources>

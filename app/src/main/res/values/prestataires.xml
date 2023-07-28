@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="prestataires">
+        <item>BOUYGUES ENERGIES et SERVICES</item>
+        <item>CEGELEC</item>
+        <item>ERS</item>
+        <item>INEO EQUANS</item>
+        <item>SANTRAC</item>
+        <item>SORELUM</item>
+        <item>SPIE</item>
+        <item>STURNO</item>
+        <item>TELELEC</item>
+    </string-array>
+</resources>
