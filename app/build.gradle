@@ -48,6 +48,8 @@ android {
 
 dependencies {
 
+    implementation "androidx.compose.animation:animation-graphics"
+
     // https://mvnrepository.com/artifact/org.apache.poi/poi
     implementation 'com.itextpdf.android:kernel-android:7.2.2'
 
@@ -58,6 +60,7 @@ dependencies {
     implementation group: 'org.apache.poi', name: 'poi', version: '5.2.3'
     implementation group: 'org.apache.poi', name: 'poi-ooxml-full', version: '5.2.3'
     implementation 'ro.andob.androidawt:androidawt:1.0.4'
+
 
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"

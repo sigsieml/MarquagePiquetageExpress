@@ -4,9 +4,11 @@ import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.tlbail.marquagepiquetage.pdf.PhotoUriManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import java.io.File
 import java.util.Calendar
 
 const val simpleDateFormatPattern = "EEE, MMM d"
@@ -17,6 +19,7 @@ class MarquageViewModel (
 
     private val questionOrder: List<MarquageQuestion> = listOf(
         MarquageQuestion.ATTESTATION,
+        MarquageQuestion.SIGNATURE,
         MarquageQuestion.ADRESSE,
         MarquageQuestion.DATE,
         MarquageQuestion.ELEMENTPRISENCOMPTEPOURLEMARQUAGE,
@@ -88,6 +91,7 @@ class MarquageViewModel (
             MarquageQuestion.DATE -> _marquage.value.numOperation.isNotEmpty()
             MarquageQuestion.ELEMENTPRISENCOMPTEPOURLEMARQUAGE -> true
             MarquageQuestion.PHOTO -> true
+            MarquageQuestion.SIGNATURE -> true
         }
     }
 
@@ -131,6 +135,12 @@ class MarquageViewModel (
     fun setDate(date: Long) {
         val newMarquage: Marquage = Marquage(marquage.value)
         newMarquage.date = Calendar.getInstance().apply { timeInMillis = date }
+        _marquage.compareAndSet(_marquage.value, newMarquage)
+    }
+
+    fun onSignatureResponse(uri: Uri) {
+        val newMarquage: Marquage = Marquage(marquage.value)
+        newMarquage.signature = uri.toString()
         _marquage.compareAndSet(_marquage.value, newMarquage)
     }
 }
@@ -184,4 +194,5 @@ enum class MarquageQuestion {
     DATE,
     ELEMENTPRISENCOMPTEPOURLEMARQUAGE,
     PHOTO,
+    SIGNATURE
 }

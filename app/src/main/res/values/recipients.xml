@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="nomRecipients">
+        <item>Dominique PÉNOT</item>
+        <item>Laurent BARADEAU</item>
+        <item>Constance VANACHTER</item>
+        <item>Théo DUBOIS</item>
+        <item>Yves LE BAIL</item>
+        <item>David FONTAINE</item>
+        <item>Marc BENETREAU</item>
+        <item>Jerome LEPILLIET</item>
+        <item>Jérôme MAUXION</item>
+        <item>David RIGAUD</item>
+        <item>Christophe GOYET</item>
+        <item>Clothilde Segault</item>
+        <item>Marie HUMEAU</item>
+        <item>Didier BRUAND</item>
+        <item>Ewan ROZAY</item>
+        <item>Eric POUPART</item>
+        <item>Sebastien MERCIER</item>
+    </string-array>
+    <string-array name="mailRecipients">
+        <item>d.penot@sieml.fr</item>
+        <item>l.baradeau@sieml.fr</item>
+        <item>c.vanachter@sieml.fr</item>
+        <item>t.dubois@sieml.fr</item>
+        <item>y.lebail@sieml.fr</item>
+        <item>d.fontaine@sieml.fr</item>
+        <item>m.benetreau@sieml.fr</item>
+        <item>j.lepilliet@sieml.fr</item>
+        <item>j.mauxion@sieml.fr</item>
+        <item>d.rigaud@sieml.fr</item>
+        <item>c.goyet@sieml.fr</item>
+        <item>c.segault@sieml.fr</item>
+        <item>m.humeau@sieml.fr</item>
+        <item>d.bruand@sieml.fr</item>
+        <item>e.rozay@sieml.fr</item>
+        <item>e.poupart@sieml.fr</item>
+        <item>s.mercier@sieml.fr</item>
+    </string-array>
+</resources>

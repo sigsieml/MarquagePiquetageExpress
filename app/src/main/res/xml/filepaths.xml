@@ -3,4 +3,6 @@
     <cache-path
         name="photos"
         path="photos" />
+
+    <files-path name="marquage.pdf" path="marquages/"/>
 </paths>

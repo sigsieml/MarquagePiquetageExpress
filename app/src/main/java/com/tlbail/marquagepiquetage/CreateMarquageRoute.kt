@@ -13,6 +13,7 @@ import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,14 +24,13 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.tlbail.marquagepiquetage.Signature.DrawingApp
+import kotlinx.coroutines.flow.StateFlow
 import java.util.Calendar
 
 private const val CONTENT_ANIMATION_DURATION = 300
 @Composable
-fun CreateMarquageRoute(onNavUp: ()-> Unit, onCreateSignatureClick: () -> Unit, onMarquageComplete: () -> Unit) {
-    val viewModel: MarquageViewModel = viewModel(
-        factory = MarquageViewModelFactory(PhotoUriManager(LocalContext.current)
-        ))
+fun CreateMarquageRoute(viewModel: MarquageViewModel, onNavUp: ()-> Unit, onCreateSignatureClick: () -> Unit, onMarquageComplete: () -> Unit) {
 
     val marquageScreenData = viewModel.marquageScreenData ?: return
 
@@ -130,6 +130,13 @@ fun CreateMarquageRoute(onNavUp: ()-> Unit, onCreateSignatureClick: () -> Unit, 
                         getNewImageUri = { viewModel.getNewSelfieUri() },
                         onPhotoTaken = { viewModel.onSelfieResponse(it)},
                         modifier = modifier,
+                    )
+                }
+                
+                MarquageQuestion.SIGNATURE ->{
+                    SignatureQuestion(
+                        onSaveSignature = { viewModel.onSignatureResponse(it) },
+                        modifier =  modifier
                     )
                 }
 

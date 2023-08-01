@@ -1,10 +1,10 @@
 package com.tlbail.marquagepiquetage
 
-import android.content.res.Resources
 import android.net.Uri
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,22 +23,33 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.core.net.toUri
+import com.tlbail.marquagepiquetage.Signature.DrawingApp
+import com.tlbail.marquagepiquetage.Signature.PathProperties
+import com.tlbail.marquagepiquetage.Signature.createImageBitmapFromCanvas
+import com.tlbail.marquagepiquetage.Signature.saveImageBitmapToFile
 import com.tlbail.marquagepiquetage.ui.theme.slightlyDeemphasizedAlpha
 import com.tlbail.marquagepiquetage.ui.theme.stronglyDeemphasizedAlpha
 import kotlinx.coroutines.flow.StateFlow
+import java.io.File
 
 
 @Composable
@@ -316,3 +327,37 @@ fun ElementDePriseEnComptePourLeMarquageQuestion(
         modifier = modifier,
     )
 }
+
+@Composable
+fun SignatureQuestion(
+    onSaveSignature: (Uri) -> Unit,
+    modifier: Modifier= Modifier
+){
+    val context = LocalContext.current
+    val paths = remember { mutableStateListOf<Pair<Path, PathProperties>>() }
+    var size = remember { mutableStateOf(IntSize.Zero) }
+
+    DisposableEffect(Unit){
+        onDispose {
+            val imageBitmap = createImageBitmapFromCanvas(paths, size.value)
+            val outputFile = File(context.filesDir, "signature.png")
+            saveImageBitmapToFile(imageBitmap, outputFile)
+            onSaveSignature(outputFile.toUri())
+        }
+    }
+
+
+    Column(modifier = modifier) {
+        Spacer(Modifier.height(32.dp))
+        QuestionTitle(R.string.questionSignatureTitle)
+        R.string.questionSignatureDescription.let {
+            Spacer(Modifier.height(18.dp))
+            QuestionDirections(it)
+        }
+        Spacer(Modifier.height(18.dp))
+        DrawingApp(paddingValues = PaddingValues(0.dp),
+            paths = paths,
+            size = size)
+    }
+}
+

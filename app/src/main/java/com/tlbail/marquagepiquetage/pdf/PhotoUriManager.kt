@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.tlbail.marquagepiquetage
+package com.tlbail.marquagepiquetage.pdf
 
 import android.content.Context
 import android.net.Uri

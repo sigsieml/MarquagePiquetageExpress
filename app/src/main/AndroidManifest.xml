@@ -18,6 +18,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:launchMode="singleTop"
             android:label="@string/app_name"
             android:theme="@style/Theme.MarquagePiquetage">
             <intent-filter>
@@ -28,7 +29,7 @@
         </activity>
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
+            android:authorities="com.tlbail.marquagepiquetage.fileprovider"
             android:grantUriPermissions="true"
             android:exported="false">
             <meta-data
