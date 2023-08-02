@@ -34,7 +34,7 @@ public class AndroidPdfMarquageCreator implements PdfMarquageCreatorImpl {
         File file = new File(folder, "marquage.pdf");
         try (FileOutputStream fos = new FileOutputStream(file)) {
             InputStream modele = context.getAssets().open("modele.docx");
-            createPdf( this,modele, fos, marquage);
+            createPdf( context,modele, fos, marquage);
             return file;
         } catch (IOException e) {
             Log.e("PdfMarquageCreator", "createPdfOnInternalStorage: " + e.getMessage() );
