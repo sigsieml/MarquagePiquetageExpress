@@ -131,23 +131,28 @@ fun AttestationQuestion(
         Column() {
             makeTextField(
                 marquage.value.numOperation,
-                { value -> onAttestationChaned(Attestation(value, marquage.value.libelleChantier, marquage.value.titulaire, marquage.value.nomSignataire)) },
+                { value -> onAttestationChaned(Attestation(value, marquage.value.libelleChantier, marquage.value.titulaire, marquage.value.nomSignataire, marquage.value.numDict)) },
                 R.string.questionNOperation
             )
             makeTextField(
                 marquage.value.libelleChantier,
-                { value -> onAttestationChaned(Attestation(marquage.value.numOperation, value, marquage.value.titulaire, marquage.value.nomSignataire)) },
+                { value -> onAttestationChaned(Attestation(marquage.value.numOperation, value, marquage.value.titulaire, marquage.value.nomSignataire, marquage.value.numDict)) },
                 R.string.questionLibelleChantier
             )
             makeTextField(
                 marquage.value.nomSignataire,
-                { value -> onAttestationChaned(Attestation(marquage.value.numOperation, marquage.value.libelleChantier, marquage.value.titulaire, value)) },
+                { value -> onAttestationChaned(Attestation(marquage.value.numOperation, marquage.value.libelleChantier, marquage.value.titulaire, value, marquage.value.numDict)) },
                 R.string.questionNomSignataire
             )
             AutoCompleteTextField(label = stringResource(id = R.string.questionTitulaire), options = stringArrayResource(
                 id = R.array.prestataires
             ), value = marquage.value.titulaire, onTextChaned =
-                { value -> onAttestationChaned(Attestation(marquage.value.numOperation, marquage.value.libelleChantier, value, marquage.value.nomSignataire)) },
+                { value -> onAttestationChaned(Attestation(marquage.value.numOperation, marquage.value.libelleChantier, value, marquage.value.nomSignataire, marquage.value.numDict)) },
+            )
+            makeTextField(
+                marquage.value.numDict,
+                { value -> onAttestationChaned(Attestation(marquage.value.numOperation, marquage.value.libelleChantier, marquage.value.titulaire, marquage.value.nomSignataire, value)) },
+                R.string.questionNumDict
             )
         }
     }

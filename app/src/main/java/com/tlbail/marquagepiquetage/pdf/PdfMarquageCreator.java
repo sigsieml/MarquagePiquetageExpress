@@ -62,33 +62,34 @@ public  class PdfMarquageCreator {
         document.getTables().get(0).getRows().get(0).getCell(1).setText(marquage.numOperation);
         document.getTables().get(0).getRows().get(1).getCell(1).setText(marquage.libelleChantier);
         document.getTables().get(0).getRows().get(2).getCell(1).setText(marquage.commune);
+        document.getTables().get(0).getRows().get(3).getCell(1).setText(marquage.numDict);
 
 
-        XWPFTable tableElement = document.getTables().get(1);
+        XWPFTable tableElement = document.getTables().get(2);
         if(marquage.dtdict){
             tableElement.getRow(1).getCell(1).setText("X");
         }else{
-            tableElement.getRow(1).getCell(2).setText("X");
+            tableElement.getRow(1).getCell(1).setText("");
         }
         if(marquage.recepisseDesDict){
             tableElement.getRow(2).getCell(1).setText("X");
         }else{
-            tableElement.getRow(2).getCell(2).setText("X");
+            tableElement.getRow(2).getCell(1).setText("");
         }
         if(marquage.marquageExploitant){
             tableElement.getRow(3).getCell(1).setText("X");
         }else {
-            tableElement.getRow(3).getCell(2).setText("X");
+            tableElement.getRow(3).getCell(1).setText("");
         }
         if(marquage.zoneMultiReseaux){
             tableElement.getRow(4).getCell(1).setText("X");
         }else{
-            tableElement.getRow(4).getCell(2).setText("X");
+            tableElement.getRow(4).getCell(1).setText("");
         }
         if(marquage.instructionSieml){
             tableElement.getRow(5).getCell(1).setText("X");
         }else{
-            tableElement.getRow(5).getCell(2).setText("X");
+            tableElement.getRow(5).getCell(1).setText("");
         }
 
         for(XWPFParagraph paragraph : document.getParagraphs()){
@@ -101,7 +102,7 @@ public  class PdfMarquageCreator {
             }
         }
 
-        XWPFTable tableSignataire = document.getTables().get(2);
+        XWPFTable tableSignataire = document.getTables().get(3);
         tableSignataire.getRow(1).getCell(0).setText(marquage.titulaire);
         tableSignataire.getRow(1).getCell(1).setText(marquage.nomSignataire);
         String formattedDateOfToday = Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "/" + Calendar.getInstance().get(Calendar.MONTH) + "/" + Calendar.getInstance().get(Calendar.YEAR);

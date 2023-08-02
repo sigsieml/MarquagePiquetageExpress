@@ -27,6 +27,7 @@ public class MarquageToPdf  {
         Marquage marquage = new Marquage("12345",
                 "Chantier 1",
                 "Titulaire A",
+                "dict",
                 "Signataire A",
                 12,
                 "Rue de la Paix",

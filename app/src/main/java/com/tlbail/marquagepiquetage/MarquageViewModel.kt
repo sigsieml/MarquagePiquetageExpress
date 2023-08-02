@@ -97,6 +97,7 @@ class MarquageViewModel (
         newMarquage.libelleChantier = attestation.libelleChantier
         newMarquage.titulaire = attestation.titulaire
         newMarquage.nomSignataire = attestation.nomSignataire
+        newMarquage.numDict = attestation.numDict
         _marquage.compareAndSet(_marquage.value, newMarquage)
         _isNextEnabled.value = getIsNextEnabled()
     }
@@ -175,6 +176,7 @@ data class Attestation(
     val libelleChantier: String = "",
     val titulaire: String = "",
     val nomSignataire: String = "",
+    val numDict: String = "",
 )
 
 data class Adress(

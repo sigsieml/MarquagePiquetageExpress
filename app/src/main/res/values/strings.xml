@@ -29,7 +29,7 @@
     <string name="questionPhotoTitle">Photo</string>
     <string name="retake_photo">reprendre la photo</string>
     <string name="add_photo">ajouter la photo</string>
-    <string name="dtDict">DT/DICT</string>
+    <string name="dtDict">DT/DICT disjointes</string>
     <string name="recepisseDesDict">Récépissés des DICT</string>
     <string name="marquageExploitant">Marquage exploitant</string>
     <string name="zoneMultiReseaux">Zone Multi-réseaux</string>
@@ -38,6 +38,7 @@
     <string name="select_all">Sélectionner tous ce qui correspond</string>
     <string name="questionSignatureTitle">Signature</string>
     <string name="questionSignatureDescription">dessinez votre signature</string>
+    <string name="questionNumDict">Numéro de DICT</string>
 
 
 </resources>

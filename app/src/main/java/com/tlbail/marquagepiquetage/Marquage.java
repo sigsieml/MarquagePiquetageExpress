@@ -20,13 +20,15 @@ public class Marquage {
     public Boolean zoneMultiReseaux  = false;
     public Boolean instructionSieml  = false;
     public String signature  = "";
+    public String numDict = "";
 
     public Marquage(){}
 
-    public Marquage(String numOperation, String libelleChantier, String titulaire, String nomSignataire, int numRue, String nomRue, String commune, Calendar date, List<String> photos, Boolean dtdict, Boolean recepisseDesDict, Boolean marquageExploitant, Boolean zoneMultiReseaux, Boolean instructionSieml, String signature) {
+    public Marquage(String numOperation, String libelleChantier, String titulaire, String numDict, String nomSignataire, int numRue, String nomRue, String commune, Calendar date, List<String> photos, Boolean dtdict, Boolean recepisseDesDict, Boolean marquageExploitant, Boolean zoneMultiReseaux, Boolean instructionSieml, String signature) {
         this.numOperation = numOperation;
         this.libelleChantier = libelleChantier;
         this.titulaire = titulaire;
+        this.numDict = numDict;
         this.nomSignataire = nomSignataire;
         this.numRue = numRue;
         this.nomRue = nomRue;
@@ -64,6 +66,7 @@ public class Marquage {
         return "numOperation='" + numOperation + '\'' +
                 ", libelleChantier='" + libelleChantier + '\'' +
                 ", titulaire='" + titulaire + '\'' +
+                ", numDict='" + numDict + "\'" +
                 ", nomSignataire='" + nomSignataire + '\'' +
                 ", numRue=" + numRue +
                 ", nomRue='" + nomRue + '\'' +
