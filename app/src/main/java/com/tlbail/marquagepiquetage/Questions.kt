@@ -1,6 +1,7 @@
 package com.tlbail.marquagepiquetage
 
 import android.net.Uri
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -10,11 +11,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,6 +27,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -136,14 +140,14 @@ fun AttestationQuestion(
                 R.string.questionLibelleChantier
             )
             makeTextField(
-                marquage.value.titulaire,
-                { value -> onAttestationChaned(Attestation(marquage.value.numOperation, marquage.value.libelleChantier, value, marquage.value.nomSignataire)) },
-                R.string.questionTitulaire
-            )
-            makeTextField(
                 marquage.value.nomSignataire,
                 { value -> onAttestationChaned(Attestation(marquage.value.numOperation, marquage.value.libelleChantier, marquage.value.titulaire, value)) },
                 R.string.questionNomSignataire
+            )
+            AutoCompleteTextField(label = stringResource(id = R.string.questionTitulaire), options = stringArrayResource(
+                id = R.array.prestataires
+            ), value = marquage.value.titulaire, onTextChaned =
+                { value -> onAttestationChaned(Attestation(marquage.value.numOperation, marquage.value.libelleChantier, value, marquage.value.nomSignataire)) },
             )
         }
     }
@@ -187,42 +191,60 @@ fun AdresseQuestion(
 
     val options = stringArrayResource(id = R.array.villes)
 
+    if (isDialogShown && localisation.value.latitude == 0.toDouble() ) {
+        Dialog(onDismissRequest = {
+            isDialogShown = false
+            if(localisation.value.latitude != 0.toDouble()){
+                onAdressChanged(getReadableLocation(localisation.value.latitude, localisation.value.longitude, context = context))
+            }
+        }) {
+            val localisation2 = getUserLocation(context = context)
+            if(localisation2.value.latitude != 0.toDouble()){
+                isDialogShown = false
+                onAdressChanged(getReadableLocation(localisation2.value.latitude, localisation2.value.longitude, context = context))
+            }
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .size(50.dp)
+                    .padding(16.dp),
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+    }
+    if(isDialogShown && localisation.value.latitude != 0.toDouble()){
+        isDialogShown = false
+        onAdressChanged(getReadableLocation(localisation.value.latitude, localisation.value.longitude, context = context))
+    }
+
+
     QuestionWrapper(titleResourceId = R.string.questionAdresse,
         modifier = modifier,
         directionsResourceId = R.string.questionAdresseDirections) {
-        if (isDialogShown && localisation == null) {
-            Row() {
-                Dialog(onDismissRequest = { /* Ne rien faire quand l'utilisateur essaie de fermer le dialogue */ }) {
-                    CircularProgressIndicator()
-                }
-            }
-        } else {
-            Column {
-                makeTextField(
-                    marquage.value.numRue.toString(),
-                    { value -> onAdressChanged(Adress((if(value.toIntOrNull() == null) 0 else value.toInt()), marquage.value.nomRue, marquage.value.commune)) },
-                    R.string.questionNumRue
-                )
-                makeTextField(
-                    marquage.value.nomRue,
-                    { value -> onAdressChanged(Adress(marquage.value.numRue, value, marquage.value.commune)) },
-                    R.string.questionRue
-                )
-                AutoCompleteTextField(
-                    options = options,
-                    value = marquage.value.commune,
-                    onTextChaned = { onAdressChanged(Adress(marquage.value.numRue, marquage.value.nomRue, it))},
-                    label = stringResource(id = R.string.questionCommune)
-                )
-                Button(onClick = {
-                    isDialogShown = true
-                    if (localisation.latitude.toInt() != 0)  {
-                        onAdressChanged( getReadableLocation(localisation.latitude, localisation.longitude, context))
-                        isDialogShown = false
-                    } },
-                    modifier = Modifier.padding(top = 16.dp)) {
-                    Icon(Icons.Filled.LocationOn, contentDescription = "Geolocalisation")
-                }
+        Column {
+            makeTextField(
+                marquage.value.numRue.toString(),
+                { value -> onAdressChanged(Adress((if(value.toIntOrNull() == null) 0 else value.toInt()), marquage.value.nomRue, marquage.value.commune)) },
+                R.string.questionNumRue
+            )
+            makeTextField(
+                marquage.value.nomRue,
+                { value -> onAdressChanged(Adress(marquage.value.numRue, value, marquage.value.commune)) },
+                R.string.questionRue
+            )
+            AutoCompleteTextField(
+                options = options,
+                value = marquage.value.commune,
+                onTextChaned = { onAdressChanged(Adress(marquage.value.numRue, marquage.value.nomRue, it))},
+                label = stringResource(id = R.string.questionCommune)
+            )
+            Button(onClick = {
+                isDialogShown = true
+                if (localisation.value.latitude.toInt() != 0)  {
+                    onAdressChanged( getReadableLocation(localisation.value.latitude, localisation.value.longitude, context))
+                    isDialogShown = false
+                } },
+                modifier = Modifier.padding(top = 16.dp)) {
+                Icon(Icons.Filled.LocationOn, contentDescription = "Geolocalisation")
             }
         }
     }

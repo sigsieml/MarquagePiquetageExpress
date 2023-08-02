@@ -87,7 +87,7 @@ fun WelcomeScreen(navigateToCreateAttestation: () -> Unit, navigateToSieml: () -
                 onClick = navigateToSieml,
                 shape = MaterialTheme.shapes.small
             ) {
-                Text(text = "À propos du SIEMl", color = MaterialTheme.colorScheme.onSurface)
+                Text(text = "À propos du SIEML", color = MaterialTheme.colorScheme.onSurface)
             }
         }
     }

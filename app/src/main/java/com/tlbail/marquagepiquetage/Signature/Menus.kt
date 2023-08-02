@@ -44,60 +44,20 @@ import kotlin.math.roundToInt
 fun DrawingPropertiesMenu(
     modifier: Modifier = Modifier,
     pathProperties: PathProperties,
-    drawMode: DrawMode,
     onUndo: () -> Unit,
     onRedo: () -> Unit,
-    onPathPropertiesChange: (PathProperties) -> Unit,
-    onDrawModeChanged: (DrawMode) -> Unit
 ) {
 
     val properties by rememberUpdatedState(newValue = pathProperties)
 
     var showColorDialog by remember { mutableStateOf(false) }
     var showPropertiesDialog by remember { mutableStateOf(false) }
-    var currentDrawMode = drawMode
 
     Row(
-        modifier = modifier
-//            .background(getRandomColor())
-        ,
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        IconButton(
-            onClick = {
-                currentDrawMode = if (currentDrawMode == DrawMode.Touch) {
-                    DrawMode.Draw
-                } else {
-                    DrawMode.Touch
-                }
-                onDrawModeChanged(currentDrawMode)
-            }
-        ) {
-            Icon(
-                Icons.Filled.ThumbUp,
-                contentDescription = null,
-                tint = if (currentDrawMode == DrawMode.Touch) Color.Black else Color.LightGray
-            )
-        }
-        IconButton(
-            onClick = {
-                currentDrawMode = if (currentDrawMode == DrawMode.Erase) {
-                    DrawMode.Draw
-                } else {
-                    DrawMode.Erase
-                }
-                onDrawModeChanged(currentDrawMode)
-            }
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_eraser_black_24dp),
-                contentDescription = null,
-                tint = if (currentDrawMode == DrawMode.Erase) Color.Black else Color.LightGray
-            )
-        }
-
-
         IconButton(onClick = { showColorDialog = !showColorDialog }) {
             ColorWheel(modifier = Modifier.size(24.dp))
         }
@@ -109,13 +69,13 @@ fun DrawingPropertiesMenu(
         IconButton(onClick = {
             onUndo()
         }) {
-            Icon(Icons.Filled.Call, contentDescription = null, tint = Color.LightGray)
+            Icon(painter = painterResource(id = R.drawable.undo), contentDescription = null, tint = Color.LightGray)
         }
 
         IconButton(onClick = {
             onRedo()
         }) {
-            Icon(Icons.Filled.Refresh, contentDescription = null, tint = Color.LightGray)
+            Icon(painter = painterResource(id = R.drawable.redo), contentDescription = null, tint = Color.LightGray)
         }
     }
 
@@ -141,7 +101,7 @@ fun DrawingPropertiesMenu(
 @Composable
 fun PropertiesMenuDialog(pathOption: PathProperties, onDismiss: () -> Unit) {
 
-    var strokeWidth by remember { mutableStateOf(pathOption.strokeWidth) }
+    var strokeWidth by remember { mutableFloatStateOf(pathOption.strokeWidth) }
     var strokeCap by remember { mutableStateOf(pathOption.strokeCap) }
     var strokeJoin by remember { mutableStateOf(pathOption.strokeJoin) }
 
@@ -197,47 +157,6 @@ fun PropertiesMenuDialog(pathOption: PathProperties, onDismiss: () -> Unit) {
                     valueRange = 1f..100f,
                     onValueChangeFinished = {}
                 )
-
-
-                ExposedSelectionMenu(title = "Stroke Cap",
-                    index = when (strokeCap) {
-                        StrokeCap.Butt -> 0
-                        StrokeCap.Round -> 1
-                        else -> 2
-                    },
-                    options = listOf("Butt", "Round", "Square"),
-                    onSelected = {
-                        println("STOKE CAP $it")
-                        strokeCap = when (it) {
-                            0 -> StrokeCap.Butt
-                            1 -> StrokeCap.Round
-                            else -> StrokeCap.Square
-                        }
-
-                        pathOption.strokeCap = strokeCap
-
-                    }
-                )
-
-                ExposedSelectionMenu(title = "Stroke Join",
-                    index = when (strokeJoin) {
-                        StrokeJoin.Miter -> 0
-                        StrokeJoin.Round -> 1
-                        else -> 2
-                    },
-                    options = listOf("Miter", "Round", "Bevel"),
-                    onSelected = {
-                        println("STOKE JOIN $it")
-
-                        strokeJoin = when (it) {
-                            0 -> StrokeJoin.Miter
-                            1 -> StrokeJoin.Round
-                            else -> StrokeJoin.Bevel
-                        }
-
-                        pathOption.strokeJoin = strokeJoin
-                    }
-                )
             }
         }
     }
@@ -251,10 +170,10 @@ fun ColorSelectionDialog(
     onNegativeClick: () -> Unit,
     onPositiveClick: (Color) -> Unit
 ) {
-    var red by remember { mutableStateOf(initialColor.red * 255) }
-    var green by remember { mutableStateOf(initialColor.green * 255) }
-    var blue by remember { mutableStateOf(initialColor.blue * 255) }
-    var alpha by remember { mutableStateOf(initialColor.alpha * 255) }
+    var red by remember { mutableFloatStateOf(initialColor.red * 255) }
+    var green by remember { mutableFloatStateOf(initialColor.green * 255) }
+    var blue by remember { mutableFloatStateOf(initialColor.blue * 255) }
+    var alpha by remember { mutableFloatStateOf(initialColor.alpha * 255) }
 
     val color = Color(
         red = red.roundToInt(),

@@ -223,7 +223,6 @@ fun DrawingApp(
                 .background(Color.White)
                 .padding(4.dp),
             pathProperties = currentPathProperty,
-            drawMode = drawMode,
             onUndo = {
                 if (paths.isNotEmpty()) {
 
@@ -244,18 +243,6 @@ fun DrawingApp(
                     pathsUndone.removeLast()
                     paths.add(Pair(lastPath, lastPathProperty))
                 }
-            },
-            onPathPropertiesChange = {
-                motionEvent = MotionEvent.ACTION_OUTSIDE
-            },
-            onDrawModeChanged = {
-                motionEvent = MotionEvent.ACTION_OUTSIDE
-                drawMode = it
-                currentPathProperty.eraseMode = (drawMode == DrawMode.Erase)
-                Toast.makeText(
-                    context, "pathProperty: ${currentPathProperty.hashCode()}, " +
-                            "Erase Mode: ${currentPathProperty.eraseMode}", Toast.LENGTH_SHORT
-                ).show()
             }
         )
     }

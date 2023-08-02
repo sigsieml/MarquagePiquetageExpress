@@ -15,6 +15,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import com.tlbail.marquagepiquetage.ui.theme.backgroundColor
+import java.awt.Color
+import java.awt.Color.white
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,7 +47,6 @@ fun AutoCompleteTextField(
                     expanded = expanded
                 )
             },
-            colors = ExposedDropdownMenuDefaults.textFieldColors(),
             modifier = Modifier.fillMaxWidth().menuAnchor(),
             keyboardOptions = KeyboardOptions(
                 imeAction = androidx.compose.ui.text.input.ImeAction.Done

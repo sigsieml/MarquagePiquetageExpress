@@ -18,6 +18,7 @@ package com.tlbail.marquagepiquetage
 
 import android.content.res.Configuration
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
@@ -34,6 +35,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -41,6 +44,10 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.luminance
@@ -65,23 +72,67 @@ fun PhotoImplQuestion(
     } else {
         Icons.Filled.Face
     }
-    var newImageUri: Uri? = null
+    var newImageUri: Uri? by remember { mutableStateOf(null) }
+    val context = LocalContext.current
 
     val cameraLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicture(),
-        onResult = { success ->
-            if (success) {
-                onPhotoTaken(newImageUri!!)
-            }
+        onResult = { _ ->
+            newImageUri?.let { onPhotoTaken(it) }
         }
     )
 
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = { uri: Uri? ->
+            uri?.let { onPhotoTaken(it) }
+        }
+    )
 
+    val dialogState = remember { mutableStateOf(false) }
+
+    if (dialogState.value) {
+        AlertDialog(
+            onDismissRequest = {
+                dialogState.value = false
+            },
+            title = {
+                Text(text = "Choisir une photo")
+            },
+            text = {
+                Column {
+                    Text("Voulez-vous prendre une photo ou choisir depuis votre galerie ?")
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        newImageUri = getNewImageUri()
+                        if(newImageUri == null) {
+                            Toast.makeText(context, "Une erreur est survenue", Toast.LENGTH_SHORT).show()
+                            return@Button
+                        }
+                        cameraLauncher.launch(newImageUri)
+                        dialogState.value = false
+                    }) {
+                    Text("Prendre une photo")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = {
+                        galleryLauncher.launch("image/*")
+                        dialogState.value = false
+                    }) {
+                    Text("Choisir depuis la galerie")
+                }
+            }
+        )
+    }
 
     OutlinedButton(
         onClick = {
-            newImageUri = getNewImageUri()
-            cameraLauncher.launch(newImageUri)
+            dialogState.value = true
         },
         shape = MaterialTheme.shapes.small,
         contentPadding = PaddingValues()
@@ -135,11 +186,7 @@ private fun PhotoDefaultImage(
     modifier: Modifier = Modifier,
     lightTheme: Boolean = LocalContentColor.current.luminance() < 0.5f,
 ) {
-    val assetId = if (lightTheme) {
-        R.drawable.polishcow
-    } else {
-        R.drawable.polishcow
-    }
+    val assetId = R.drawable.constructor
     Image(
         painter = painterResource(id = assetId),
         modifier = modifier,

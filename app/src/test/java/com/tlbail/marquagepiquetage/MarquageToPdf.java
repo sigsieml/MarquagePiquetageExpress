@@ -59,7 +59,7 @@ public class MarquageToPdf  {
                 true,
                 true,
                 false,
-                "Signature A");
+                null);
 
         PdfMarquageCreator pdfMarquageCreator = new PdfMarquageCreator();
 

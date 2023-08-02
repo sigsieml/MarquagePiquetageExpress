@@ -19,20 +19,16 @@ class MarquageViewModel (
 
     private val questionOrder: List<MarquageQuestion> = listOf(
         MarquageQuestion.ATTESTATION,
-        MarquageQuestion.SIGNATURE,
         MarquageQuestion.ADRESSE,
         MarquageQuestion.DATE,
         MarquageQuestion.ELEMENTPRISENCOMPTEPOURLEMARQUAGE,
         MarquageQuestion.PHOTO,
+        MarquageQuestion.SIGNATURE,
     )
-
 
     private val _marquage = MutableStateFlow(Marquage())
 
     val marquage: StateFlow<Marquage> = _marquage.asStateFlow()
-
-    val getMarquage: Marquage
-        get() = _marquage.value
 
     private val _marquageScreenData = mutableStateOf(createmarquageScreenData())
     val marquageScreenData: MarquageScreenData?
@@ -142,6 +138,13 @@ class MarquageViewModel (
         val newMarquage: Marquage = Marquage(marquage.value)
         newMarquage.signature = uri.toString()
         _marquage.compareAndSet(_marquage.value, newMarquage)
+    }
+
+    fun reset() {
+       _marquage.value = Marquage()
+        questionIndex = 0
+        _isNextEnabled.value = getIsNextEnabled()
+        _marquageScreenData.value = createmarquageScreenData()
     }
 }
 

@@ -63,6 +63,9 @@ fun MarquagePiquetageNavHost(
         composable(MARQUAGE_COMPLETE_ROUTE) { MarqueCompleteRoute(
             viewModel = viewModel,
             onDonePressed = { navController.navigate(
-            WELCOME_ROUTE) }) }
+            WELCOME_ROUTE)
+                viewModel.reset()
+            })
+        }
     }
 }

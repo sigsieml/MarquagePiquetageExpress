@@ -20,6 +20,7 @@ import java.io.IOException
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import android.Manifest;
+import androidx.compose.runtime.MutableState
 
 //A callback for receiving notifications from the FusedLocationProviderClient.
 lateinit var locationCallback: LocationCallback
@@ -28,12 +29,12 @@ lateinit var locationProvider: FusedLocationProviderClient
 
 @SuppressLint("MissingPermission")
 @Composable
-fun getUserLocation(context: Context): LatandLong {
+fun getUserLocation(context: Context): MutableState<LatandLong> {
 
     // The Fused Location Provider provides access to location APIs.
     locationProvider = LocationServices.getFusedLocationProviderClient(context)
 
-    var currentUserLocation by remember { mutableStateOf(LatandLong()) }
+    var currentUserLocation = remember { mutableStateOf(LatandLong()) }
 
 
     DisposableEffect(key1 = locationProvider) {
@@ -46,7 +47,7 @@ fun getUserLocation(context: Context): LatandLong {
                  * */
                 for (location in result.locations) {
                     // Update data class with location data
-                    currentUserLocation = LatandLong(location.latitude, location.longitude)
+                    currentUserLocation.value = LatandLong(location.latitude, location.longitude)
                     Log.d("LOCATION_TAG", "${location.latitude},${location.longitude}")
                 }
 
@@ -62,7 +63,7 @@ fun getUserLocation(context: Context): LatandLong {
                             val lat = location.latitude
                             val long = location.longitude
                             // Update data class with location data
-                            currentUserLocation = LatandLong(latitude = lat, longitude = long)
+                            currentUserLocation.value = LatandLong(latitude = lat, longitude = long)
                         }
                     }
                     .addOnFailureListener {
