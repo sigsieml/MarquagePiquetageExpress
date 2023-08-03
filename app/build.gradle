@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.tlbail.marquagepiquetage'
+    namespace 'fr.sieml.marquagepiquetage'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.tlbail.marquagepiquetage"
+        applicationId "fr.sieml.marquagepiquetage"
         minSdk 26
         targetSdk 34
         versionCode 1

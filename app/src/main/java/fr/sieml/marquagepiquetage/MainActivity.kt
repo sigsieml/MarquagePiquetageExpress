@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.sieml.marquagepiquetage.ui.theme.MarquagePiquetageTheme
+import fr.sieml.marquagepiquetage.ui.theme.MarquagePiquetageTheme
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
