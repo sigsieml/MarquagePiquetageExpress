@@ -61,6 +61,7 @@ public class AndroidPdfMarquageCreator implements PdfMarquageCreatorImpl {
         } catch (Exception e) {
             // Handle exception
             e.printStackTrace();
+            Log.e("PdfMarquageCreator", "getImagesByteFromPath: " + e.getMessage());
             return null;
         } finally {
             try {

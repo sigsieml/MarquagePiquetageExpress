@@ -54,6 +54,7 @@ import com.tlbail.marquagepiquetage.ui.theme.slightlyDeemphasizedAlpha
 import com.tlbail.marquagepiquetage.ui.theme.stronglyDeemphasizedAlpha
 import kotlinx.coroutines.flow.StateFlow
 import java.io.File
+import java.util.Calendar
 
 
 @Composable
@@ -261,15 +262,15 @@ fun AdresseQuestion(
 
 @Composable
 fun DateQuestion(
-    marquage: StateFlow<Marquage>,
-    onClick: () -> Unit,
+    date: Calendar,
     modifier: Modifier = Modifier,
+    setDate: (Long) -> Unit,
 ) {
     DateImplQuestion(
         titleResourceId = R.string.questionDateTitle,
         directionsResourceId = R.string.questionDateDirections,
-        marquageState = marquage,
-        onClick = onClick,
+        date = date,
+        setDate = setDate,
         modifier = modifier,
     )
 }

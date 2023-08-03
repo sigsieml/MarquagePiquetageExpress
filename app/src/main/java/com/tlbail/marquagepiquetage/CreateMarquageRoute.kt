@@ -30,7 +30,7 @@ import java.util.Calendar
 
 private const val CONTENT_ANIMATION_DURATION = 300
 @Composable
-fun CreateMarquageRoute(viewModel: MarquageViewModel, onNavUp: ()-> Unit, onCreateSignatureClick: () -> Unit, onMarquageComplete: () -> Unit) {
+fun CreateMarquageRoute(viewModel: MarquageViewModel, onNavUp: ()-> Unit, onMarquageComplete: () -> Unit) {
 
     val marquageScreenData = viewModel.marquageScreenData ?: return
 
@@ -101,18 +101,9 @@ fun CreateMarquageRoute(viewModel: MarquageViewModel, onNavUp: ()-> Unit, onCrea
                 }
 
                 MarquageQuestion.DATE -> {
-                    val supportFragmentManager =
-                        LocalContext.current.findActivity().supportFragmentManager
                     DateQuestion(
-                        marquage = viewModel.marquage,
-                        onClick = {
-                            showTakeawayDatePicker(
-                                date = viewModel.marquage.value.date.timeInMillis,
-                                supportFragmentManager = supportFragmentManager,
-                                onDateSelected = { date ->
-                                    viewModel.setDate(date)}
-                            )
-                        },
+                        date = viewModel.getMarquage.date,
+                        setDate = { viewModel.setDate(it) },
                         modifier = modifier,
                     )
                 }
@@ -163,26 +154,3 @@ private fun getTransitionDirection(
     }
 }
 
-private tailrec fun Context.findActivity(): AppCompatActivity =
-    when (this) {
-        is AppCompatActivity -> this
-        is ContextWrapper -> this.baseContext.findActivity()
-        else -> throw IllegalArgumentException("Could not find activity!")
-    }
-
-
-private fun showTakeawayDatePicker(
-    date: Long?,
-    supportFragmentManager: FragmentManager,
-    onDateSelected: (date: Long) -> Unit,
-) {
-    val picker = MaterialDatePicker.Builder.datePicker()
-        .setSelection(date)
-        .build()
-    picker.show(supportFragmentManager, picker.toString())
-    picker.addOnPositiveButtonClickListener {
-        picker.selection?.let {
-            onDateSelected(it)
-        }
-    }
-}

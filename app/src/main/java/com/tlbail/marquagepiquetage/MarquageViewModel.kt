@@ -22,13 +22,15 @@ class MarquageViewModel (
         MarquageQuestion.ADRESSE,
         MarquageQuestion.DATE,
         MarquageQuestion.ELEMENTPRISENCOMPTEPOURLEMARQUAGE,
-        MarquageQuestion.PHOTO,
         MarquageQuestion.SIGNATURE,
+        MarquageQuestion.PHOTO,
     )
 
     private val _marquage = MutableStateFlow(Marquage())
 
     val marquage: StateFlow<Marquage> = _marquage.asStateFlow()
+    val getMarquage: Marquage
+        get() = _marquage.value
 
     private val _marquageScreenData = mutableStateOf(createmarquageScreenData())
     val marquageScreenData: MarquageScreenData?

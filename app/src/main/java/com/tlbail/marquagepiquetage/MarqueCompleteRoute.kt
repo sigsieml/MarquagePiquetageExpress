@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -49,12 +50,22 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
 import com.tlbail.marquagepiquetage.pdf.AndroidPdfMarquageCreator
 import com.tlbail.marquagepiquetage.pdf.PdfMarquageCreator
+import java.io.File
 import java.util.Calendar
 private lateinit var sendMailLauncher: ActivityResultLauncher<Intent>
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MarqueCompleteRoute(viewModel: MarquageViewModel, onDonePressed: () -> Unit) {
+fun MarqueCompleteRoute(
+    onNavUp : () -> Unit,
+    pdfFile: File,
+    viewModel: MarquageViewModel, onDonePressed: () -> Unit) {
+
+    BackHandler {
+        onNavUp()
+    }
+
+
     val marquage = viewModel.marquage.collectAsState()
     val nomRecipient = stringArrayResource(id = R.array.nomRecipients)
     val mailRecipient = stringArrayResource(id = R.array.mailRecipients)
@@ -104,7 +115,7 @@ fun MarqueCompleteRoute(viewModel: MarquageViewModel, onDonePressed: () -> Unit)
             },
             bottomBar = {
                 OutlinedButton(
-                    onClick = { sendMail(context,marquage.value,mailRecipient,nomRecipient, selectedRecipient) },
+                    onClick = { sendMail(pdfFile,context,marquage.value,mailRecipient,nomRecipient, selectedRecipient) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 20.dp, vertical = 24.dp)
@@ -115,14 +126,12 @@ fun MarqueCompleteRoute(viewModel: MarquageViewModel, onDonePressed: () -> Unit)
         )
     }
 }
-fun sendMail(context: Context, marquage: Marquage, mailRecipient: Array<String>, nomRecipient: Array<String>, selectedNomRecepient: MutableState<String?>) {
+fun sendMail(file:File,  context: Context, marquage: Marquage, mailRecipient: Array<String>, nomRecipient: Array<String>, selectedNomRecepient: MutableState<String?>) {
     if(selectedNomRecepient.value == null || selectedNomRecepient.value == "") {
         Toast.makeText(context, "Veuillez sélectionner un destinataire", Toast.LENGTH_SHORT).show()
         return
     }
 
-    val marquageCreator = AndroidPdfMarquageCreator(context)
-    val file = marquageCreator.createPdfOnInternalStorage(marquage)
 
     //get nomRecipient index from selectedNomRecepient
     val index = nomRecipient.indexOf(selectedNomRecepient.value)
