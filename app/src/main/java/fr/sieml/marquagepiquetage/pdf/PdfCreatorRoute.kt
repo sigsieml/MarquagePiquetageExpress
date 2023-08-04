@@ -40,6 +40,7 @@ fun PdfCreatorRoute(marquage: Marquage, onPdfCreated: (File) -> Unit) {
     val image = AnimatedImageVector.animatedVectorResource(R.drawable.avd_anim)
     var atEnd by remember { mutableStateOf(false) }
     val painter = rememberAnimatedVectorPainter(image, atEnd)
+    var isAnimationFinished by remember { mutableStateOf(false) }
     Surface(modifier = Modifier
         .fillMaxWidth()
         .wrapContentWidth(align = Alignment.CenterHorizontally)
@@ -50,11 +51,18 @@ fun PdfCreatorRoute(marquage: Marquage, onPdfCreated: (File) -> Unit) {
             contentDescription = "Splash Screen",
             contentScale = ContentScale.FillHeight
         )
-        // Ajoutez votre UI pour l'écran de chargement ici
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator() // Un simple spinner de chargement
+        if(isAnimationFinished){
+            // Ajoutez votre UI pour l'écran de chargement ici
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator() // Un simple spinner de chargement
+            }
         }
     }
+
+    LaunchedEffect(key1 = Unit, block = {
+        delay(2000)
+        isAnimationFinished = true
+    })
 
     LaunchedEffect(key1 = Unit, block = {
         atEnd = true

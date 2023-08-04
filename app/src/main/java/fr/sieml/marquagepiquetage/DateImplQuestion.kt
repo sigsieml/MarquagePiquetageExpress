@@ -120,13 +120,15 @@ fun DateImplQuestion(
             Text(text = "Durée du chantier :")
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Slider(value = sliderPosition.toFloat(), onValueChange = {
-                    sliderPosition = it.toInt()
+                    if(sliderPosition != it.toInt()){
+                        sliderPosition = it.toInt()
+                        view.vibrate()
+                    }
                 },
                     valueRange = valueRange,
                     steps = 27,
                     onValueChangeFinished = {
                         setChantierDuration(sliderPosition.toInt())
-                        view.vibrate()
                     },
                     modifier = Modifier
                         .fillMaxWidth()

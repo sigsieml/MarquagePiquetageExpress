@@ -176,7 +176,6 @@ public  class PdfMarquageCreator {
         }
         paragraph.setIndentationLeft(0);
 
-
         // add image from
         List<String> urisImages = marquage.photos;
         int index = 0;
@@ -195,28 +194,22 @@ public  class PdfMarquageCreator {
                 String id = document.addPictureData(bos.toByteArray(), XWPFDocument.PICTURE_TYPE_JPEG);
                 XWPFPictureData image = document.getPictureDataByID(id);
 
-
-
-                // Resize image using ImageIO
-                int width = bitmap.getWidth();
-                int height = bitmap.getHeight();
                 // Définir la largeur et la hauteur maximales de l'image en points (1 pouce = 72 points)
                 int maxWidth = 500; // Ajustez cette valeur en fonction de la largeur de votre document
                 int maxHeight = 600; // Ajustez cette valeur en fonction de la hauteur maximale souhaitée pour vos images
 
-// Calculez le rapport d'aspect de l'image
+                // Calculez le rapport d'aspect de l'image
                 double aspectRatio = (double) bitmap.getWidth() / (double) bitmap.getHeight();
 
-// Calculez la nouvelle largeur et la nouvelle hauteur de l'image
+                // Calculez la nouvelle largeur et la nouvelle hauteur de l'image
                 int newWidth = Math.min(bitmap.getWidth(), maxWidth);
                 int newHeight = (int) (newWidth / aspectRatio);
 
-// Si la nouvelle hauteur est toujours trop grande, ajustez la largeur en conséquence
+                // Si la nouvelle hauteur est toujours trop grande, ajustez la largeur en conséquence
                 if (newHeight > maxHeight) {
                     newHeight = maxHeight;
                     newWidth = (int) (newHeight * aspectRatio);
                 }
-
 
                 // Si nous sommes à la page 2 ou plus, nous ajoutons l'image
                 XWPFRun run = paragraph.createRun();
@@ -224,7 +217,7 @@ public  class PdfMarquageCreator {
 
                 run.addPicture(new ByteArrayInputStream(image.getData()), XWPFDocument.PICTURE_TYPE_JPEG, imageUri, Units.toEMU(newWidth), Units.toEMU(newHeight));
 
-// Set the indentation
+                // Set the indentation
                 CTPPr ppr = paragraph.getCTP().getPPr();
                 if (ppr == null) {
                     ppr = paragraph.getCTP().addNewPPr();
@@ -234,7 +227,7 @@ public  class PdfMarquageCreator {
                     ind = ppr.addNewInd();
                 }
 
-// Set the left indentation (values are in twips or 1/20 of a point)
+                // Set the left indentation (values are in twips or 1/20 of a point)
                 ind.setLeft(BigInteger.valueOf(-1200)); // negative value to move to the left
             } catch (InvalidFormatException e) {
                 e.printStackTrace();
