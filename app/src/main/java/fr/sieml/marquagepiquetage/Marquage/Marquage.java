@@ -1,4 +1,4 @@
-package fr.sieml.marquagepiquetage;
+package fr.sieml.marquagepiquetage.Marquage;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,10 +21,15 @@ public class Marquage {
     public Boolean instructionSieml  = false;
     public String signature  = "";
     public String numDict = "";
+    public int chantierDuration = 12;
+
+    public Techniques techniques = new Techniques();
+    public String autreEnginDeChantier = "";
+    public String observation = "";
 
     public Marquage(){}
 
-    public Marquage(String numOperation, String libelleChantier, String titulaire, String numDict, String nomSignataire, int numRue, String nomRue, String commune, Calendar date, List<String> photos, Boolean dtdict, Boolean recepisseDesDict, Boolean marquageExploitant, Boolean zoneMultiReseaux, Boolean instructionSieml, String signature) {
+    public Marquage(String numOperation, String libelleChantier, String titulaire, String numDict, String nomSignataire, int numRue, String nomRue, String commune, Calendar date, List<String> photos, Boolean dtdict, Boolean recepisseDesDict, Boolean marquageExploitant, Boolean zoneMultiReseaux, Boolean instructionSieml, String signature, int chantierDuration, Techniques techniques, String autreEnginDeChantier, String observation) {
         this.numOperation = numOperation;
         this.libelleChantier = libelleChantier;
         this.titulaire = titulaire;
@@ -41,12 +46,17 @@ public class Marquage {
         this.zoneMultiReseaux = zoneMultiReseaux;
         this.instructionSieml = instructionSieml;
         this.signature = signature;
+        this.chantierDuration = chantierDuration;
+        this.techniques = techniques;
+        this.autreEnginDeChantier = autreEnginDeChantier;
+        this.observation = observation;
     }
 
     public Marquage(Marquage marquage){
         this.numOperation = marquage.numOperation;
         this.libelleChantier = marquage.libelleChantier;
         this.titulaire = marquage.titulaire;
+        this.numDict = marquage.numDict;
         this.nomSignataire = marquage.nomSignataire;
         this.numRue = marquage.numRue;
         this.nomRue = marquage.nomRue;
@@ -59,6 +69,10 @@ public class Marquage {
         this.zoneMultiReseaux = marquage.zoneMultiReseaux;
         this.instructionSieml = marquage.instructionSieml;
         this.signature = marquage.signature;
+        this.chantierDuration = marquage.chantierDuration;
+        this.techniques = marquage.techniques;
+        this.autreEnginDeChantier = marquage.autreEnginDeChantier;
+        this.observation = marquage.observation;
     }
 
     @Override
@@ -78,6 +92,10 @@ public class Marquage {
                 ", marquageExploitant=" + marquageExploitant +
                 ", zoneMultiReseaux=" + zoneMultiReseaux +
                 ", instructionSieml=" + instructionSieml +
+                ", chantierDuration=" + chantierDuration +
+                ", techniques=" + techniques +
+                ", autreEnginDeChantier='" + autreEnginDeChantier + '\'' +
+                ", observation='" + observation + '\'' +
                 ", signature='" + signature ;
     }
 }

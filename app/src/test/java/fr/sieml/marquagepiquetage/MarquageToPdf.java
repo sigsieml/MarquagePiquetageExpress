@@ -1,5 +1,7 @@
 package fr.sieml.marquagepiquetage;
 
+import fr.sieml.marquagepiquetage.Marquage.Marquage;
+import fr.sieml.marquagepiquetage.Marquage.Techniques;
 import fr.sieml.marquagepiquetage.pdf.PdfMarquageCreator;
 import fr.sieml.marquagepiquetage.pdf.PdfMarquageCreatorImpl;
 
@@ -58,7 +60,11 @@ public class MarquageToPdf  {
                 true,
                 true,
                 false,
-                null);
+                null,
+                23,
+                new Techniques(),
+                "",
+                "");
 
         PdfMarquageCreator pdfMarquageCreator = new PdfMarquageCreator();
 

@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
-import fr.sieml.marquagepiquetage.Marquage;
+import fr.sieml.marquagepiquetage.Marquage.Marquage;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

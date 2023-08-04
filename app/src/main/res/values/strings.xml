@@ -39,6 +39,25 @@
     <string name="questionSignatureTitle">Signature</string>
     <string name="questionSignatureDescription">dessinez votre signature</string>
     <string name="questionNumDict">Numéro de DICT</string>
+    <string name="destinatairePersonnalise">Destinataire personnalisé</string>
+    <string name="forageAvecTariere">Forage à la tarière</string>
+    <string name="forageDirige">Forage dirigé</string>
+    <string name="fuseOuOgive">Fusée ou Ogive</string>
+    <string name="briseRoche">Brise-Roche</string>
+    <string name="EnginElevateur">Engin Élévateur</string>
+    <string name="enginVibrant">Engin Vibrant</string>
+    <string name="grue">Grue</string>
+    <string name="manuelOuManutentionDobjetOuMateriel">Manuel ou Manutention d\'objet ou de matériel</string>
+    <string name="pelleMecanique">Pelles mécaniques ou Mini-pelles</string>
+    <string name="trancheuse">Trancheuse</string>
+    <string name="raboteuse">Raboteuse, recycleuse stabilisatrice</string>
+    <string name="techniqueDouce">Technique douce (camion aspirateur)</string>
+    <string name="observationsTitle">Observations</string>
+    <string name="observationsDirections">champs optionnels</string>
+    <string name="questionObservation">Observations</string>
+    <string name="questionAutreEnginDeChantier">Autres engins de chantier</string>
+    <string name="questionTechnique">Technique utilisées</string>
+    <string name="deletePhoto">supprimer</string>
 
 
 </resources>

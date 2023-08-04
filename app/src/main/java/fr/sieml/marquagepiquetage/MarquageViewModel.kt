@@ -4,6 +4,8 @@ import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import fr.sieml.marquagepiquetage.Marquage.Marquage
+import fr.sieml.marquagepiquetage.Marquage.Techniques
 import fr.sieml.marquagepiquetage.pdf.PhotoUriManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,14 +23,16 @@ class MarquageViewModel (
         MarquageQuestion.ADRESSE,
         MarquageQuestion.DATE,
         MarquageQuestion.ELEMENTPRISENCOMPTEPOURLEMARQUAGE,
+        MarquageQuestion.TECHNIQUES,
+        MarquageQuestion.OBSERVATIONS,
         MarquageQuestion.SIGNATURE,
         MarquageQuestion.PHOTO,
     )
 
-    private val _marquage = MutableStateFlow(fr.sieml.marquagepiquetage.Marquage())
+    private val _marquage = MutableStateFlow(Marquage())
 
-    val marquage: StateFlow<fr.sieml.marquagepiquetage.Marquage> = _marquage.asStateFlow()
-    val getMarquage: fr.sieml.marquagepiquetage.Marquage
+    val marquage: StateFlow<Marquage> = _marquage.asStateFlow()
+    val getMarquage: Marquage
         get() = _marquage.value
 
     private val _marquageScreenData = mutableStateOf(createmarquageScreenData())
@@ -89,12 +93,14 @@ class MarquageViewModel (
             MarquageQuestion.ELEMENTPRISENCOMPTEPOURLEMARQUAGE -> true
             MarquageQuestion.PHOTO -> true
             MarquageQuestion.SIGNATURE -> true
+            MarquageQuestion.TECHNIQUES -> true
+            MarquageQuestion.OBSERVATIONS -> true
         }
     }
 
     fun setAttestation(attestation: Attestation) {
-        val newMarquage: fr.sieml.marquagepiquetage.Marquage =
-            fr.sieml.marquagepiquetage.Marquage(marquage.value)
+        val newMarquage: Marquage =
+            Marquage(marquage.value)
         newMarquage.numOperation = attestation.numOperation
         newMarquage.libelleChantier = attestation.libelleChantier
         newMarquage.titulaire = attestation.titulaire
@@ -105,8 +111,8 @@ class MarquageViewModel (
     }
 
     fun setAdress(adress: Adress){
-        val newMarquage: fr.sieml.marquagepiquetage.Marquage =
-            fr.sieml.marquagepiquetage.Marquage(marquage.value)
+        val newMarquage: Marquage =
+            Marquage(marquage.value)
         newMarquage.numRue = adress.numRue
         newMarquage.nomRue = adress.nomRue
         newMarquage.commune = adress.commune
@@ -115,8 +121,8 @@ class MarquageViewModel (
     }
 
     fun setElements(element: ElementPriseComptePourLeMarquage){
-        val newMarquage: fr.sieml.marquagepiquetage.Marquage =
-            fr.sieml.marquagepiquetage.Marquage(marquage.value)
+        val newMarquage: Marquage =
+            Marquage(marquage.value)
         newMarquage.dtdict = element.dtdict
         newMarquage.recepisseDesDict = element.recepisseDesDict
         newMarquage.marquageExploitant = element.marquageExploitant
@@ -127,32 +133,66 @@ class MarquageViewModel (
     }
     fun getNewSelfieUri() = photoUriManager.buildNewUri()
     fun onSelfieResponse(uri: Uri) {
-        val newMarquage: fr.sieml.marquagepiquetage.Marquage =
-            fr.sieml.marquagepiquetage.Marquage(marquage.value)
+        val newMarquage: Marquage =
+            Marquage(marquage.value)
         newMarquage.photos = newMarquage.photos.plus(uri.toString())
         _marquage.compareAndSet(_marquage.value, newMarquage)
         _isNextEnabled.value = getIsNextEnabled()
     }
 
     fun setDate(date: Long) {
-        val newMarquage: fr.sieml.marquagepiquetage.Marquage =
-            fr.sieml.marquagepiquetage.Marquage(marquage.value)
+        val newMarquage: Marquage =
+            Marquage(marquage.value)
         newMarquage.date = Calendar.getInstance().apply { timeInMillis = date }
         _marquage.compareAndSet(_marquage.value, newMarquage)
     }
 
     fun onSignatureResponse(uri: Uri) {
-        val newMarquage: fr.sieml.marquagepiquetage.Marquage =
-            fr.sieml.marquagepiquetage.Marquage(marquage.value)
+        val newMarquage: Marquage =
+            Marquage(marquage.value)
         newMarquage.signature = uri.toString()
         _marquage.compareAndSet(_marquage.value, newMarquage)
     }
 
     fun reset() {
-       _marquage.value = fr.sieml.marquagepiquetage.Marquage()
+       _marquage.value = Marquage()
         questionIndex = 0
         _isNextEnabled.value = getIsNextEnabled()
         _marquageScreenData.value = createmarquageScreenData()
+    }
+
+    fun setChantierDuration(it: Int) {
+       val newMarquage: Marquage =
+           Marquage(marquage.value)
+        newMarquage.chantierDuration = it
+        _marquage.compareAndSet(_marquage.value, newMarquage)
+    }
+
+    fun setTechnique(technique: Techniques) {
+        val newMarquage: Marquage =
+            Marquage(marquage.value)
+        newMarquage.techniques = technique
+        _marquage.compareAndSet(_marquage.value, newMarquage)
+    }
+
+    fun setObservation(observation: String) {
+        val newMarquage: Marquage =
+            Marquage(marquage.value)
+        newMarquage.observation = observation
+        _marquage.compareAndSet(_marquage.value, newMarquage)
+    }
+    fun setAutreEnginDeChantier(autreEnginDeChantier: String) {
+        val newMarquage: Marquage =
+            Marquage(marquage.value)
+        newMarquage.autreEnginDeChantier = autreEnginDeChantier
+        _marquage.compareAndSet(_marquage.value, newMarquage)
+    }
+
+    fun onSelfieDeleted(it: Uri) {
+        val newMarquage: Marquage =
+            Marquage(marquage.value)
+        newMarquage.photos = newMarquage.photos.minus(it.toString())
+        _marquage.compareAndSet(_marquage.value, newMarquage)
     }
 }
 
@@ -205,6 +245,9 @@ enum class MarquageQuestion {
     ADRESSE,
     DATE,
     ELEMENTPRISENCOMPTEPOURLEMARQUAGE,
+    TECHNIQUES,
+    OBSERVATIONS,
     PHOTO,
     SIGNATURE
 }
+

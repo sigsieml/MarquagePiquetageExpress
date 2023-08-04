@@ -41,6 +41,8 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.core.net.toUri
+import fr.sieml.marquagepiquetage.Marquage.Marquage
+import fr.sieml.marquagepiquetage.Marquage.Techniques
 import fr.sieml.marquagepiquetage.Signature.DrawingApp
 import fr.sieml.marquagepiquetage.Signature.PathProperties
 import fr.sieml.marquagepiquetage.Signature.createImageBitmapFromCanvas
@@ -116,8 +118,8 @@ private fun QuestionDirections(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AttestationQuestion(
-    marquageState: StateFlow<fr.sieml.marquagepiquetage.Marquage>,
-    onAttestationChaned: (attestation: Attestation) -> Unit,
+    marquageState: StateFlow<Marquage>,
+    onAttestationChanged: (attestation: Attestation) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var marquage = marquageState.collectAsState()
@@ -127,28 +129,28 @@ fun AttestationQuestion(
         Column() {
             makeTextField(
                 marquage.value.numOperation,
-                { value -> onAttestationChaned(Attestation(value, marquage.value.libelleChantier, marquage.value.titulaire, marquage.value.nomSignataire, marquage.value.numDict)) },
+                { value -> onAttestationChanged(Attestation(value, marquage.value.libelleChantier, marquage.value.titulaire, marquage.value.nomSignataire, marquage.value.numDict)) },
                 R.string.questionNOperation
             )
             makeTextField(
                 marquage.value.libelleChantier,
-                { value -> onAttestationChaned(Attestation(marquage.value.numOperation, value, marquage.value.titulaire, marquage.value.nomSignataire, marquage.value.numDict)) },
+                { value -> onAttestationChanged(Attestation(marquage.value.numOperation, value, marquage.value.titulaire, marquage.value.nomSignataire, marquage.value.numDict)) },
                 R.string.questionLibelleChantier
             )
             makeTextField(
                 marquage.value.nomSignataire,
-                { value -> onAttestationChaned(Attestation(marquage.value.numOperation, marquage.value.libelleChantier, marquage.value.titulaire, value, marquage.value.numDict)) },
+                { value -> onAttestationChanged(Attestation(marquage.value.numOperation, marquage.value.libelleChantier, marquage.value.titulaire, value, marquage.value.numDict)) },
                 R.string.questionNomSignataire
+            )
+            makeTextField(
+                marquage.value.numDict,
+                { value -> onAttestationChanged(Attestation(marquage.value.numOperation, marquage.value.libelleChantier, marquage.value.titulaire, marquage.value.nomSignataire, value)) },
+                R.string.questionNumDict
             )
             AutoCompleteTextField(label = stringResource(id = R.string.questionTitulaire), options = stringArrayResource(
                 id = R.array.prestataires
             ), value = marquage.value.titulaire, onTextChaned =
-                { value -> onAttestationChaned(Attestation(marquage.value.numOperation, marquage.value.libelleChantier, value, marquage.value.nomSignataire, marquage.value.numDict)) },
-            )
-            makeTextField(
-                marquage.value.numDict,
-                { value -> onAttestationChaned(Attestation(marquage.value.numOperation, marquage.value.libelleChantier, marquage.value.titulaire, marquage.value.nomSignataire, value)) },
-                R.string.questionNumDict
+            { value -> onAttestationChanged(Attestation(marquage.value.numOperation, marquage.value.libelleChantier, value, marquage.value.nomSignataire, marquage.value.numDict)) },
             )
         }
     }
@@ -179,7 +181,7 @@ fun makeTextField(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AdresseQuestion(
-    marquageState: StateFlow<fr.sieml.marquagepiquetage.Marquage>,
+    marquageState: StateFlow<Marquage>,
     onAdressChanged: (marquage: Adress) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -260,6 +262,8 @@ fun DateQuestion(
     date: Calendar,
     modifier: Modifier = Modifier,
     setDate: (Long) -> Unit,
+    chantierDuration: Int,
+    setChantierDuration: (Int) -> Unit
 ) {
     DateImplQuestion(
         titleResourceId = R.string.questionDateTitle,
@@ -267,13 +271,16 @@ fun DateQuestion(
         date = date,
         setDate = setDate,
         modifier = modifier,
+        chantierDuration = chantierDuration,
+        setChantierDuration = setChantierDuration
     )
 }
 @Composable
 fun PhotoQuestion(
-    marquageState: StateFlow<fr.sieml.marquagepiquetage.Marquage>,
+    marquageState: StateFlow<Marquage>,
     getNewImageUri: () -> Uri,
     onPhotoTaken: (Uri) -> Unit,
+    onPhotoDeleted: (Uri) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var marquage = marquageState.collectAsState()
@@ -288,6 +295,7 @@ fun PhotoQuestion(
                     imageUri = Uri.parse(uriPhoto),
                     getNewImageUri = getNewImageUri,
                     onPhotoTaken = onPhotoTaken,
+                    onPhotoDeleted = { uri -> onPhotoDeleted(uri) }
                 )
             }
             PhotoImplQuestion(
@@ -301,7 +309,7 @@ fun PhotoQuestion(
 
 @Composable
 fun ElementDePriseEnComptePourLeMarquageQuestion(
-    marquageState: StateFlow<fr.sieml.marquagepiquetage.Marquage>,
+    marquageState: StateFlow<Marquage>,
     modifier: Modifier,
     setElement: (element: ElementPriseComptePourLeMarquage) -> Unit,
 ){
@@ -384,3 +392,118 @@ fun SignatureQuestion(
     }
 }
 
+@Composable
+fun TechniqueQuestion(
+    marquage: StateFlow<Marquage>,
+    setTechniques: (Techniques) -> Unit,
+    modifier: Modifier
+){
+    val marquage = marquage.collectAsState()
+    val techniques = marquage.value.techniques
+    var selectedAnswers:List<Int> = listOf()
+    if(techniques.forageAvecTariere)selectedAnswers = selectedAnswers.plus(R.string.forageAvecTariere)
+    if(techniques.forageDirige)selectedAnswers = selectedAnswers.plus(R.string.forageDirige)
+    if(techniques.fuseOuOgive)selectedAnswers = selectedAnswers.plus(R.string.fuseOuOgive)
+    if(techniques.briseRoche)selectedAnswers = selectedAnswers.plus(R.string.briseRoche)
+    if(techniques.enginElevateur)selectedAnswers = selectedAnswers.plus(R.string.EnginElevateur)
+    if(techniques.enginVibrant)selectedAnswers = selectedAnswers.plus(R.string.enginVibrant)
+    if(techniques.grue)selectedAnswers = selectedAnswers.plus(R.string.grue)
+    if(techniques.manuelOuManutentionDobjetOuMateriel) selectedAnswers = selectedAnswers.plus(R.string.manuelOuManutentionDobjetOuMateriel)
+    if(techniques.pelleMecanique) selectedAnswers = selectedAnswers.plus(R.string.pelleMecanique)
+    if(techniques.trancheuse) selectedAnswers = selectedAnswers.plus(R.string.trancheuse)
+    if(techniques.raboteuse) selectedAnswers = selectedAnswers.plus(R.string.raboteuse)
+    if(techniques.techniqueDouce) selectedAnswers = selectedAnswers.plus(R.string.techniqueDouce)
+
+    var possibleAnswers = listOf(
+        R.string.forageAvecTariere,
+        R.string.forageDirige,
+        R.string.fuseOuOgive,
+        R.string.briseRoche,
+        R.string.EnginElevateur,
+        R.string.enginVibrant,
+        R.string.grue,
+        R.string.manuelOuManutentionDobjetOuMateriel,
+        R.string.pelleMecanique,
+        R.string.trancheuse,
+        R.string.raboteuse,
+        R.string.techniqueDouce
+    )
+    MultipleChoiceQuestion(
+        titleResourceId = R.string.questionTechnique,
+        directionsResourceId = R.string.select_all,
+        possibleAnswers = possibleAnswers,
+        selectedAnswers = selectedAnswers,
+        onOptionSelected =  { selected, answer ->
+            val element = Techniques(techniques )
+            if(selected) {
+                when(answer) {
+                    R.string.forageAvecTariere -> element.forageAvecTariere = true
+                    R.string.forageDirige -> element.forageDirige = true
+                    R.string.fuseOuOgive -> element.fuseOuOgive = true
+                    R.string.briseRoche -> element.briseRoche = true
+                    R.string.EnginElevateur -> element.enginElevateur = true
+                    R.string.enginVibrant -> element.enginVibrant = true
+                    R.string.grue -> element.grue = true
+                    R.string.manuelOuManutentionDobjetOuMateriel -> element.manuelOuManutentionDobjetOuMateriel = true
+                    R.string.pelleMecanique -> element.pelleMecanique = true
+                    R.string.trancheuse -> element.trancheuse = true
+                    R.string.raboteuse -> element.raboteuse = true
+                    R.string.techniqueDouce -> element.techniqueDouce = true
+                }
+            } else {
+                when(answer) {
+                    R.string.forageAvecTariere -> element.forageAvecTariere = false
+                    R.string.forageDirige -> element.forageDirige = false
+                    R.string.fuseOuOgive -> element.fuseOuOgive = false
+                    R.string.briseRoche -> element.briseRoche = false
+                    R.string.EnginElevateur -> element.enginElevateur = false
+                    R.string.enginVibrant -> element.enginVibrant = false
+                    R.string.grue -> element.grue = false
+                    R.string.manuelOuManutentionDobjetOuMateriel -> element.manuelOuManutentionDobjetOuMateriel = false
+                    R.string.pelleMecanique -> element.pelleMecanique = false
+                    R.string.trancheuse -> element.trancheuse = false
+                    R.string.raboteuse -> element.raboteuse = false
+                    R.string.techniqueDouce -> element.techniqueDouce = false
+                }
+            }
+            setTechniques(element)
+        },
+        modifier = modifier,
+    )
+}
+
+
+@Composable
+fun ObservationQuestion(
+    marquage: StateFlow<Marquage>,
+    setObservation: (String) -> Unit,
+    setAutreEnginDeChantier: (String) -> Unit,
+    modifier: Modifier){
+    val marquage = marquage.collectAsState()
+    val observation = marquage.value.observation
+    val autreEnginDeChantier = marquage.value.autreEnginDeChantier
+
+
+    QuestionWrapper(titleResourceId = R.string.observationsTitle,
+        modifier = modifier,
+        directionsResourceId = R.string.observationsDirections) {
+        Column() {
+            makeTextField(
+                marquage.value.autreEnginDeChantier,
+                { value -> setAutreEnginDeChantier(value) },
+                R.string.questionAutreEnginDeChantier
+            )
+            OutlinedTextField(
+                value = marquage.value.observation,
+                onValueChange = setObservation,
+                modifier = modifier.fillMaxWidth().height(200.dp),
+                label = { Text(text = stringResource(id = R.string.questionObservation)) },
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done,
+                    keyboardType = KeyboardType.Text,
+                    autoCorrect = true
+                )
+            )
+        }
+    }
+}

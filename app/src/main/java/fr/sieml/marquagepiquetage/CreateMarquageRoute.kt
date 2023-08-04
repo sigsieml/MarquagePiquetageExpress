@@ -67,7 +67,7 @@ fun CreateMarquageRoute(viewModel: MarquageViewModel, onNavUp: ()-> Unit, onMarq
                 MarquageQuestion.ATTESTATION -> {
                     AttestationQuestion(
                         marquageState = viewModel.marquage,
-                        onAttestationChaned = {
+                        onAttestationChanged = {
                             viewModel.setAttestation(it)
                         },
                         modifier = modifier,
@@ -89,6 +89,8 @@ fun CreateMarquageRoute(viewModel: MarquageViewModel, onNavUp: ()-> Unit, onMarq
                         date = viewModel.getMarquage.date,
                         setDate = { viewModel.setDate(it) },
                         modifier = modifier,
+                        chantierDuration = viewModel.getMarquage.chantierDuration,
+                        setChantierDuration = { viewModel.setChantierDuration(it) }
                     )
                 }
 
@@ -99,11 +101,25 @@ fun CreateMarquageRoute(viewModel: MarquageViewModel, onNavUp: ()-> Unit, onMarq
                         setElement = { viewModel.setElements(it) }
                     )
 
+                MarquageQuestion.TECHNIQUES ->
+                    TechniqueQuestion(
+                        marquage = viewModel.marquage,
+                        modifier = modifier,
+                        setTechniques = { viewModel.setTechnique(it) }
+                    )
+                MarquageQuestion.OBSERVATIONS ->
+                    ObservationQuestion(
+                        marquage = viewModel.marquage,
+                        modifier = modifier,
+                        setObservation = { viewModel.setObservation(it) },
+                        setAutreEnginDeChantier = { viewModel.setAutreEnginDeChantier(it) }
+                    )
                 MarquageQuestion.PHOTO -> {
                     PhotoQuestion(
                         marquageState = viewModel.marquage,
                         getNewImageUri = { viewModel.getNewSelfieUri() },
                         onPhotoTaken = { viewModel.onSelfieResponse(it)},
+                        onPhotoDeleted = { viewModel.onSelfieDeleted(it) },
                         modifier = modifier,
                     )
                 }

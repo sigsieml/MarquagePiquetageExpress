@@ -18,6 +18,8 @@ import java.util.Map;
 
 import fr.opensagres.poi.xwpf.converter.pdf.PdfConverter;
 import fr.opensagres.poi.xwpf.converter.pdf.PdfOptions;
+import fr.sieml.marquagepiquetage.Marquage.Marquage;
+import fr.sieml.marquagepiquetage.Marquage.Techniques;
 
 public class wordtoPdf {
 
@@ -37,7 +39,7 @@ public class wordtoPdf {
     @Test
     public void wordToPdf() {
         // Création des instances de la classe Marquage
-        Marquage marquage = new Marquage("12345", "Chantier 1", "Titulaire A","dict", "Signataire A", 12, "Rue de la Paix", "Paris", Calendar.getInstance(), Arrays.asList("photo1.jpg", "photo2.jpg"), true, true, true, true, false, "Signature A");
+        Marquage marquage = new Marquage("12345", "Chantier 1", "Titulaire A","dict", "Signataire A", 12, "Rue de la Paix", "Paris", Calendar.getInstance(), Arrays.asList("photo1.jpg", "photo2.jpg"), true, true, true, true, false, "Signature A", 23, new Techniques(), "", "");
         try {
             InputStream doc = getClass().getClassLoader().getResourceAsStream(PATH_MODELE);
             File outputFile = new File("marquage.pdf");

@@ -5,7 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 
-import fr.sieml.marquagepiquetage.Marquage;
+import fr.sieml.marquagepiquetage.Marquage.Marquage;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
@@ -44,6 +44,8 @@ public  class PdfMarquageCreator {
         remplacements.put("DATE", formatedDate + "   ");
         remplacements.put("HEURE", marquage.date.get(Calendar.HOUR_OF_DAY) + ":" + marquage.date.get(Calendar.MINUTE) + "   ");
         remplacements.put("PHOTOJOINTE", marquage.photos.size() > 0 ? "Oui" : "Aucune photo jointe");
+        remplacements.put("CHANTIERDURATION", marquage.chantierDuration + "   ");
+        remplacements.put("OBSERVATIONSCHANTIER", marquage.observation + "   ");
 
 
         XWPFDocument document = new XWPFDocument(modele);
@@ -53,32 +55,97 @@ public  class PdfMarquageCreator {
         document.getTables().get(0).getRows().get(3).getCell(1).setText(marquage.numDict);
 
 
-        XWPFTable tableElement = document.getTables().get(2);
+        XWPFTable tableElement = document.getTables().get(1);
         if(marquage.dtdict){
+            tableElement.getRow(0).getCell(1).setText("X");
+        }else{
+            tableElement.getRow(0).getCell(1).setText("");
+        }
+        if(marquage.recepisseDesDict){
             tableElement.getRow(1).getCell(1).setText("X");
         }else{
             tableElement.getRow(1).getCell(1).setText("");
         }
-        if(marquage.recepisseDesDict){
+        if(marquage.marquageExploitant){
             tableElement.getRow(2).getCell(1).setText("X");
-        }else{
+        }else {
             tableElement.getRow(2).getCell(1).setText("");
         }
-        if(marquage.marquageExploitant){
+        if(marquage.zoneMultiReseaux){
             tableElement.getRow(3).getCell(1).setText("X");
-        }else {
+        }else{
             tableElement.getRow(3).getCell(1).setText("");
         }
-        if(marquage.zoneMultiReseaux){
+        if(marquage.instructionSieml){
             tableElement.getRow(4).getCell(1).setText("X");
         }else{
             tableElement.getRow(4).getCell(1).setText("");
         }
-        if(marquage.instructionSieml){
-            tableElement.getRow(5).getCell(1).setText("X");
+
+        XWPFTable tableTechniques = document.getTables().get(2);
+        if(marquage.techniques.forageAvecTariere){
+            tableTechniques.getRow(0).getCell(1).setText("X");
         }else{
-            tableElement.getRow(5).getCell(1).setText("");
+            tableTechniques.getRow(0).getCell(1).setText("");
         }
+        if(marquage.techniques.forageDirige){
+            tableTechniques.getRow(1).getCell(1).setText("X");
+        }else{
+            tableTechniques.getRow(1).getCell(1).setText("");
+        }
+        if(marquage.techniques.fuseOuOgive){
+            tableTechniques.getRow(2).getCell(1).setText("X");
+        }else{
+            tableTechniques.getRow(2).getCell(1).setText("");
+        }
+        if(marquage.techniques.briseRoche){
+            tableTechniques.getRow(3).getCell(1).setText("X");
+        }else{
+            tableTechniques.getRow(3).getCell(1).setText("");
+        }
+        if(marquage.techniques.enginElevateur){
+            tableTechniques.getRow(4).getCell(1).setText("X");
+        }else{
+            tableTechniques.getRow(4).getCell(1).setText("");
+        }
+        if(marquage.techniques.enginVibrant){
+            tableTechniques.getRow(5).getCell(1).setText("X");
+        }else{
+            tableTechniques.getRow(5).getCell(1).setText("");
+        }
+        if(marquage.techniques.grue){
+            tableTechniques.getRow(6).getCell(1).setText("X");
+        }else{
+            tableTechniques.getRow(6).getCell(1).setText("");
+        }
+        if(marquage.techniques.manuelOuManutentionDobjetOuMateriel){
+            tableTechniques.getRow(7).getCell(1).setText("X");
+        }else{
+            tableTechniques.getRow(7).getCell(1).setText("");
+        }
+        if(marquage.techniques.pelleMecanique){
+            tableTechniques.getRow(8).getCell(1).setText("X");
+        }else{
+            tableTechniques.getRow(8).getCell(1).setText("");
+        }
+        if(marquage.techniques.trancheuse){
+            tableTechniques.getRow(9).getCell(1).setText("X");
+        }else{
+            tableTechniques.getRow(9).getCell(1).setText("");
+        }
+        if(marquage.techniques.raboteuse){
+            tableTechniques.getRow(10).getCell(1).setText("X");
+        }else{
+            tableTechniques.getRow(10).getCell(1).setText("");
+        }
+        if(marquage.techniques.techniqueDouce){
+            tableTechniques.getRow(11).getCell(1).setText("X");
+        }else{
+            tableTechniques.getRow(11).getCell(1).setText("");
+        }
+
+        tableTechniques.getRow(12).getCell(1).setText(marquage.autreEnginDeChantier);
+
 
         for(XWPFParagraph paragraph : document.getParagraphs()){
             for(String replacementKey : remplacements.keySet()){
@@ -112,9 +179,10 @@ public  class PdfMarquageCreator {
 
         // add image from
         List<String> urisImages = marquage.photos;
-
+        int index = 0;
         for (String imageUri : urisImages) {
             try (InputStream imageStream = provider.getImagesByteFromPath(imageUri,100)) {
+                index++;
                 // rotate l'image dans le bon sens
                 ExifInterface exif = new ExifInterface(imageStream);
                 imageStream.reset();
@@ -132,16 +200,29 @@ public  class PdfMarquageCreator {
                 // Resize image using ImageIO
                 int width = bitmap.getWidth();
                 int height = bitmap.getHeight();
-                if(Units.toEMU(width) > 7563360){
-                   width = (int) Units.toPoints(7563360);
-                   // respect ratio width height
-                    height = (int) height * width / bitmap.getWidth();
+                // Définir la largeur et la hauteur maximales de l'image en points (1 pouce = 72 points)
+                int maxWidth = 500; // Ajustez cette valeur en fonction de la largeur de votre document
+                int maxHeight = 600; // Ajustez cette valeur en fonction de la hauteur maximale souhaitée pour vos images
+
+// Calculez le rapport d'aspect de l'image
+                double aspectRatio = (double) bitmap.getWidth() / (double) bitmap.getHeight();
+
+// Calculez la nouvelle largeur et la nouvelle hauteur de l'image
+                int newWidth = Math.min(bitmap.getWidth(), maxWidth);
+                int newHeight = (int) (newWidth / aspectRatio);
+
+// Si la nouvelle hauteur est toujours trop grande, ajustez la largeur en conséquence
+                if (newHeight > maxHeight) {
+                    newHeight = maxHeight;
+                    newWidth = (int) (newHeight * aspectRatio);
                 }
+
 
                 // Si nous sommes à la page 2 ou plus, nous ajoutons l'image
                 XWPFRun run = paragraph.createRun();
+                run.setText("       ");
 
-                run.addPicture(new ByteArrayInputStream(image.getData()), XWPFDocument.PICTURE_TYPE_JPEG, imageUri, Units.toEMU(width), Units.toEMU(height));
+                run.addPicture(new ByteArrayInputStream(image.getData()), XWPFDocument.PICTURE_TYPE_JPEG, imageUri, Units.toEMU(newWidth), Units.toEMU(newHeight));
 
 // Set the indentation
                 CTPPr ppr = paragraph.getCTP().getPPr();
@@ -154,7 +235,7 @@ public  class PdfMarquageCreator {
                 }
 
 // Set the left indentation (values are in twips or 1/20 of a point)
-                ind.setLeft(BigInteger.valueOf(-700 * 2 )); // negative value to move to the left
+                ind.setLeft(BigInteger.valueOf(-1200)); // negative value to move to the left
             } catch (InvalidFormatException e) {
                 e.printStackTrace();
             }

@@ -22,6 +22,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -33,6 +34,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -64,6 +66,7 @@ fun PhotoImplQuestion(
     imageUri: Uri?,
     getNewImageUri: () -> Uri,
     onPhotoTaken: (Uri) -> Unit,
+    onPhotoDeleted: (Uri) -> Unit = {}
 ) {
     val hasPhoto = imageUri != null
     val iconResource = if (hasPhoto) {
@@ -160,7 +163,7 @@ fun PhotoImplQuestion(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentSize(Alignment.BottomCenter)
+                    .wrapContentSize(Alignment.Center)
                     .padding(vertical = 26.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -175,6 +178,24 @@ fun PhotoImplQuestion(
                         }
                     )
                 )
+                if(hasPhoto){
+                    Row (modifier = Modifier
+                        .clickable {
+                            onPhotoDeleted(imageUri!!)
+                        }
+                        .padding(12.dp) ){
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Icon(imageVector = Icons.Filled.Delete, contentDescription = null,
+                            tint = MaterialTheme.colorScheme.error)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = stringResource(
+                                id = R.string.deletePhoto
+                            ),
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                }
             }
         }
     }

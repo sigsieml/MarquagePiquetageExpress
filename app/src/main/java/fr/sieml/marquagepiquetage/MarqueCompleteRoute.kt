@@ -45,9 +45,11 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
+import fr.sieml.marquagepiquetage.Marquage.Marquage
 import java.io.File
-import java.util.Calendar
+
 private lateinit var sendMailLauncher: ActivityResultLauncher<Intent>
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -65,8 +67,8 @@ fun MarqueCompleteRoute(
     val marquage = viewModel.marquage.collectAsState()
     val nomRecipient = stringArrayResource(id = R.array.nomRecipients)
     val mailRecipient = stringArrayResource(id = R.array.mailRecipients)
-
-    val selectedRecipient = remember { mutableStateOf<String?>(null) }
+    val defaultValueSelectedRecipient = stringResource(id = R.string.destinatairePersonnalise)
+    val selectedRecipient = remember { mutableStateOf<String?>(defaultValueSelectedRecipient) }
     val context = LocalContext.current
     val openDialog = remember { mutableStateOf(false)}
 
@@ -100,11 +102,11 @@ fun MarqueCompleteRoute(
             content = { innerPadding ->
                 val modifier = Modifier.padding(innerPadding)
                 MarquageComplete(
+                    file = pdfFile,
                     title = stringResource(R.string.survey_result_title),
                     subtitle = stringResource(R.string.survey_result_subtitle),
                     description = stringResource(R.string.survey_result_description),
                     modifier = modifier,
-                    marquage = marquage.value,
                     emailList = nomRecipient.toList(),
                     selectedRecipient = selectedRecipient
                 )
@@ -122,7 +124,7 @@ fun MarqueCompleteRoute(
         )
     }
 }
-fun sendMail(file:File, context: Context, marquage: fr.sieml.marquagepiquetage.Marquage, mailRecipient: Array<String>, nomRecipient: Array<String>, selectedNomRecepient: MutableState<String?>) {
+fun sendMail(file:File, context: Context, marquage: Marquage, mailRecipient: Array<String>, nomRecipient: Array<String>, selectedNomRecepient: MutableState<String?>) {
     if(selectedNomRecepient.value == null || selectedNomRecepient.value == "") {
         Toast.makeText(context, "Veuillez sélectionner un destinataire", Toast.LENGTH_SHORT).show()
         return
@@ -131,7 +133,7 @@ fun sendMail(file:File, context: Context, marquage: fr.sieml.marquagepiquetage.M
 
     //get nomRecipient index from selectedNomRecepient
     val index = nomRecipient.indexOf(selectedNomRecepient.value)
-    val recipient = mailRecipient[index]
+    val recipient = if(index == -1) "" else  mailRecipient[index]
     val intent = Intent(Intent.ACTION_SEND)
     intent.data = Uri.parse("mailto:")
     intent.type = "text/plain"
@@ -153,15 +155,22 @@ fun sendMail(file:File, context: Context, marquage: fr.sieml.marquagepiquetage.M
 
 @Composable
 fun MarquageComplete(
+    file: File,
     title: String,
     subtitle: String,
     description: String,
     modifier: Modifier = Modifier,
-    marquage: fr.sieml.marquagepiquetage.Marquage,
     emailList: List<String>,
     selectedRecipient: MutableState<String?>
 ) {
 
+    val context = LocalContext.current
+    val FILE_PROVIDER = "fileprovider"
+    val authority = "${context.packageName}.${FILE_PROVIDER}"
+    val fileUri: Uri = FileProvider.getUriForFile(context, authority, file)
+    val intent = Intent(Intent.ACTION_VIEW, fileUri)
+    intent.setDataAndType(fileUri, "application/pdf");
+    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
     LazyColumn(modifier = modifier.fillMaxSize()) {
         item {
             Spacer(modifier = Modifier.height(44.dp))
@@ -175,12 +184,23 @@ fun MarquageComplete(
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(20.dp)
             )
+            Button(
+                modifier  = Modifier
+                    .padding(horizontal = 20.dp)
+                    .fillMaxWidth(),
+                onClick = {
+                    startActivity(context, intent, null)
+                    // open file
+                }) {
+                Text(text = "Voir l'attestation")
+            }
+            Spacer(modifier = Modifier.height(44.dp))
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
-            EmailSpinner(
+            DestinataireSpinner(
                 emailList = emailList.toList(),
                 selectedEmail = selectedRecipient,
                 modifier = Modifier.padding(horizontal = 20.dp)
@@ -192,14 +212,17 @@ fun MarquageComplete(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EmailSpinner(
+fun DestinataireSpinner(
     emailList: List<String>,
     selectedEmail: MutableState<String?>,
     modifier: Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = {
+    ExposedDropdownMenuBox(
+        modifier = modifier,
+        expanded = expanded,
+        onExpandedChange = {
         expanded = !expanded
     }) {
         CompositionLocalProvider(LocalTextInputService provides null) {
@@ -226,7 +249,8 @@ fun EmailSpinner(
             expanded = expanded,
             onDismissRequest = {
                 expanded = false
-            }
+            },
+            modifier = modifier
         ) {
             emailList.forEach { selectionOption ->
                 DropdownMenuItem(
@@ -260,26 +284,9 @@ fun MarqueCompletePreview() {
         title = "title",
         subtitle = "subtitle",
         description = "description",
-        marquage = fr.sieml.marquagepiquetage.Marquage(
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            5,
-            "6",
-            "7",
-            Calendar.getInstance(),
-            listOf(),
-            false,
-            false,
-            false,
-            false,
-            false,
-            ""
-        ),
         emailList = emailList,
-        selectedRecipient = selectedEmail
+        selectedRecipient = selectedEmail,
+        file = File("")
 
     )
 }
