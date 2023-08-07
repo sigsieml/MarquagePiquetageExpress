@@ -3,14 +3,10 @@ package fr.sieml.marquagepiquetage;
 import fr.sieml.marquagepiquetage.Marquage.Marquage;
 import fr.sieml.marquagepiquetage.Marquage.Techniques;
 import fr.sieml.marquagepiquetage.pdf.PdfMarquageCreator;
-import fr.sieml.marquagepiquetage.pdf.PdfMarquageCreatorImpl;
 
-import org.apache.poi.util.IOUtils;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -72,18 +68,7 @@ public class MarquageToPdf  {
             InputStream doc = getClass().getClassLoader().getResourceAsStream(PATH_MODELE);
             File outputFile = new File("marquage.pdf");
             OutputStream out = new FileOutputStream(outputFile);
-            PdfMarquageCreator.createPdf(new PdfMarquageCreatorImpl() {
-                @Override
-                public ByteArrayInputStream getImagesByteFromPath(String path, int quality) {
-                    File imageFile = new File(path);
-                    try {
-                        return new ByteArrayInputStream(IOUtils.toByteArray(new FileInputStream(imageFile)));
-                    } catch (IOException e) {
-                        System.err.println("Error while reading image file" + e.getMessage());
-                        return null;
-                    }
-                }
-            }, doc, out, marquage);
+            PdfMarquageCreator.createPdf(null, doc, out, marquage);
             System.out.println(outputFile.getAbsolutePath());
         } catch (IOException e) {
             throw new RuntimeException(e);

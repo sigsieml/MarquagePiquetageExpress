@@ -114,6 +114,7 @@ class MarquageViewModel (
         val newMarquage: Marquage =
             Marquage(marquage.value)
         newMarquage.numRue = adress.numRue
+        newMarquage.numRueFin = adress.numRueFin
         newMarquage.nomRue = adress.nomRue
         newMarquage.commune = adress.commune
         _marquage.compareAndSet(_marquage.value, newMarquage)
@@ -228,6 +229,7 @@ data class Attestation(
 
 data class Adress(
     val numRue: Int = 1,
+    val numRueFin: Int = 1,
     val nomRue: String = "",
     val commune: String = "",
 )

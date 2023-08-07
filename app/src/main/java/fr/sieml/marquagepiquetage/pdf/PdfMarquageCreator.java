@@ -1,9 +1,11 @@
 package fr.sieml.marquagepiquetage.pdf;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.net.Uri;
 
 import fr.sieml.marquagepiquetage.Marquage.Marquage;
 
@@ -35,10 +37,11 @@ public  class PdfMarquageCreator {
 
 
 
-    public static void createPdf(PdfMarquageCreatorImpl provider, InputStream modele, OutputStream pdf, Marquage marquage) throws IOException {
+    public static void createPdf(Context context, InputStream modele, OutputStream pdf, Marquage marquage) throws IOException {
         String formatedDate = marquage.date.get(Calendar.DAY_OF_MONTH) + "/" + marquage.date.get(Calendar.MONTH) + "/" + marquage.date.get(Calendar.YEAR);
         Map<String, String> remplacements = new HashMap<>();
         remplacements.put("NUMRUE", marquage.numRue + "   ");
+        remplacements.put("FINRUE", marquage.numRueFin + "   ");
         remplacements.put("RUEOULIEUDIT", marquage.nomRue + "   ");
         remplacements.put("COMMUNE", marquage.commune + "   ");
         remplacements.put("DATE", formatedDate + "   ");
@@ -178,14 +181,17 @@ public  class PdfMarquageCreator {
 
         // add image from
         List<String> urisImages = marquage.photos;
-        int index = 0;
         for (String imageUri : urisImages) {
-            try (InputStream imageStream = provider.getImagesByteFromPath(imageUri,100)) {
-                index++;
+            Uri uri = Uri.parse(imageUri);
+            try {
+                InputStream imageStream = context.getContentResolver().openInputStream(uri);
                 // rotate l'image dans le bon sens
                 ExifInterface exif = new ExifInterface(imageStream);
-                imageStream.reset();
                 int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+                imageStream.close();
+
+
+                imageStream = context.getContentResolver().openInputStream(uri);
                 Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
                 bitmap = rotateBitmap(bitmap, orientation);
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -236,13 +242,13 @@ public  class PdfMarquageCreator {
 
         // signature
         if(marquage.signature != null){
-            try (InputStream imageStream = provider.getImagesByteFromPath(marquage.signature,100)) {
+            try (InputStream imageStream = context.getContentResolver().openInputStream(Uri.parse(marquage.signature))) {
                 // Ajoute l'image au document et récupère son id
-                String id = document.addPictureData(imageStream, XWPFDocument.PICTURE_TYPE_JPEG);
+                String id = document.addPictureData(imageStream, XWPFDocument.PICTURE_TYPE_PNG);
                 // Crée un nouveau paragraphe pour insérer l'image
                 XWPFPictureData image = document.getPictureDataByID(id);
 
-                runSignature.addPicture(new ByteArrayInputStream(image.getData()), XWPFDocument.PICTURE_TYPE_JPEG, marquage.signature, Units.toEMU(100), Units.toEMU(100));
+                runSignature.addPicture(new ByteArrayInputStream(image.getData()), XWPFDocument.PICTURE_TYPE_PNG, marquage.signature, Units.toEMU(100), Units.toEMU(100));
 
             } catch (InvalidFormatException e) {
                 e.printStackTrace();
@@ -252,6 +258,7 @@ public  class PdfMarquageCreator {
         PdfOptions options = PdfOptions.create();
         PdfConverter.getInstance().convert(document, pdf, options);
     }
+
 
 
 

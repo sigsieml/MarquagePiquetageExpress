@@ -58,6 +58,7 @@
     <string name="questionAutreEnginDeChantier">Autres engins de chantier</string>
     <string name="questionTechnique">Techniques utilisées</string>
     <string name="deletePhoto">supprimer</string>
+    <string name="questionNumRueFin">à</string>
 
 
 </resources>

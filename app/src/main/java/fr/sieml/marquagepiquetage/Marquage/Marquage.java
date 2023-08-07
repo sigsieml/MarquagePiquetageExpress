@@ -10,6 +10,7 @@ public class Marquage {
     public String titulaire  = "";
     public String nomSignataire  = "";
     public int numRue  = 1;
+    public int numRueFin = 1;
     public String nomRue  = "";
     public String commune  = "";
     public Calendar date  = Calendar.getInstance();
@@ -29,13 +30,14 @@ public class Marquage {
 
     public Marquage(){}
 
-    public Marquage(String numOperation, String libelleChantier, String titulaire, String numDict, String nomSignataire, int numRue, String nomRue, String commune, Calendar date, List<String> photos, Boolean dtdict, Boolean recepisseDesDict, Boolean marquageExploitant, Boolean zoneMultiReseaux, Boolean instructionSieml, String signature, int chantierDuration, Techniques techniques, String autreEnginDeChantier, String observation) {
+    public Marquage(String numOperation, String libelleChantier, String titulaire, String numDict, String nomSignataire, int numRue, int numRueFin, String nomRue, String commune, Calendar date, List<String> photos, Boolean dtdict, Boolean recepisseDesDict, Boolean marquageExploitant, Boolean zoneMultiReseaux, Boolean instructionSieml, String signature, int chantierDuration, Techniques techniques, String autreEnginDeChantier, String observation) {
         this.numOperation = numOperation;
         this.libelleChantier = libelleChantier;
         this.titulaire = titulaire;
         this.numDict = numDict;
         this.nomSignataire = nomSignataire;
         this.numRue = numRue;
+        this.numRueFin = numRueFin;
         this.nomRue = nomRue;
         this.commune = commune;
         this.date = date;
@@ -59,6 +61,7 @@ public class Marquage {
         this.numDict = marquage.numDict;
         this.nomSignataire = marquage.nomSignataire;
         this.numRue = marquage.numRue;
+        this.numRueFin = marquage.numRueFin;
         this.nomRue = marquage.nomRue;
         this.commune = marquage.commune;
         this.date = marquage.date;
@@ -83,6 +86,7 @@ public class Marquage {
                 ", numDict='" + numDict + "\'" +
                 ", nomSignataire='" + nomSignataire + '\'' +
                 ", numRue=" + numRue +
+                ", numRueFin=" + numRueFin +
                 ", nomRue='" + nomRue + '\'' +
                 ", commune='" + commune + '\'' +
                 ", date=" + date +

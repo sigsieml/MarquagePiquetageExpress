@@ -137,7 +137,7 @@ fun getReadableLocation(latitude: Double, longitude: Double, context: Context): 
             val numeroRue = address.featureName
             val nomRue = address.thoroughfare
             val commune = address.locality
-            return Adress(numeroRue.toInt(), nomRue, commune)
+            return Adress(numeroRue.toInt(), numeroRue.toInt(), nomRue, commune)
         }
 
     } catch (e: IOException) {
@@ -145,6 +145,6 @@ fun getReadableLocation(latitude: Double, longitude: Double, context: Context): 
 
     }
 
-    return Adress(0, "", "")
+    return Adress(1, 1,"", "")
 
 }

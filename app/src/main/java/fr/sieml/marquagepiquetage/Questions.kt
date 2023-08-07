@@ -5,11 +5,13 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -30,6 +32,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.platform.LocalContext
@@ -224,20 +227,45 @@ fun AdresseQuestion(
         modifier = modifier,
         directionsResourceId = R.string.questionAdresseDirections) {
         Column {
-            makeTextField(
-                marquage.value.numRue.toString(),
-                { value -> onAdressChanged(Adress((if(value.toIntOrNull() == null) 0 else value.toInt()), marquage.value.nomRue, marquage.value.commune)) },
-                R.string.questionNumRue
-            )
+            Row {
+                OutlinedTextField(
+                    value = if(marquage.value.numRue < 0) "" else marquage.value.numRue.toString(),
+                    onValueChange =  { value:String -> onAdressChanged(Adress((if(value.toIntOrNull() == null) -1 else value.toInt()), marquage.value.numRueFin, marquage.value.nomRue, marquage.value.commune)) },
+                    label = {Text(text = stringResource(id = R.string.questionNumRue)) },
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Done,
+                        keyboardType = KeyboardType.Number,
+                        autoCorrect = true
+                    ),
+                    modifier = Modifier.width(64.dp)
+
+                )
+                Spacer(modifier = Modifier.width(64.dp))
+                Text(text = stringResource(id = R.string.questionNumRueFin),
+                    modifier = Modifier.align(Alignment.Bottom))
+                Spacer(modifier = Modifier.width(64.dp))
+                OutlinedTextField(
+                    value = if(marquage.value.numRueFin < 0) "" else marquage.value.numRueFin.toString(),
+                    onValueChange =  { value:String -> onAdressChanged(Adress(marquage.value.numRue, (if(value.toIntOrNull() == null) -1 else value.toInt()), marquage.value.nomRue, marquage.value.commune)) },
+                    label = {Text(text = stringResource(id = R.string.questionNumRue)) },
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Done,
+                        keyboardType = KeyboardType.Number,
+                        autoCorrect = true
+                    ),
+                    modifier = Modifier.width(64.dp)
+
+                )
+            }
             makeTextField(
                 marquage.value.nomRue,
-                { value -> onAdressChanged(Adress(marquage.value.numRue, value, marquage.value.commune)) },
+                { value -> onAdressChanged(Adress(marquage.value.numRue,marquage.value.numRueFin, value, marquage.value.commune)) },
                 R.string.questionRue
             )
             AutoCompleteTextField(
                 options = options,
                 value = marquage.value.commune,
-                onTextChaned = { onAdressChanged(Adress(marquage.value.numRue, marquage.value.nomRue, it))},
+                onTextChaned = { onAdressChanged(Adress(marquage.value.numRue,marquage.value.numRueFin, marquage.value.nomRue, it))},
                 label = stringResource(id = R.string.questionCommune)
             )
             Button(onClick = {
@@ -496,7 +524,9 @@ fun ObservationQuestion(
             OutlinedTextField(
                 value = marquage.value.observation,
                 onValueChange = setObservation,
-                modifier = modifier.fillMaxWidth().height(200.dp),
+                modifier = modifier
+                    .fillMaxWidth()
+                    .height(200.dp),
                 label = { Text(text = stringResource(id = R.string.questionObservation)) },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done,
