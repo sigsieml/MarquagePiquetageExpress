@@ -8,10 +8,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,10 +40,10 @@ import java.io.File
 @Composable
 fun PdfCreatorRoute(marquage: Marquage, onPdfCreated: (File) -> Unit) {
     val context = LocalContext.current
-    val image = AnimatedImageVector.animatedVectorResource(R.drawable.avd_anim)
+    val image = AnimatedImageVector.animatedVectorResource(R.drawable.tractopelleanim)
     var atEnd by remember { mutableStateOf(false) }
     val painter = rememberAnimatedVectorPainter(image, atEnd)
-    var isAnimationFinished by remember { mutableStateOf(false) }
+    var progress by remember { mutableStateOf(0.1f) }
     Surface(modifier = Modifier
         .fillMaxWidth()
         .wrapContentWidth(align = Alignment.CenterHorizontally)
@@ -51,25 +54,30 @@ fun PdfCreatorRoute(marquage: Marquage, onPdfCreated: (File) -> Unit) {
             contentDescription = "Splash Screen",
             contentScale = ContentScale.FillHeight
         )
-        if(isAnimationFinished){
-            // Ajoutez votre UI pour l'écran de chargement ici
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator() // Un simple spinner de chargement
-            }
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
+            LinearProgressIndicator(progress = progress, modifier = Modifier.fillMaxWidth()
+                .padding(bottom = 120.dp)
+                .height(32.dp))
         }
     }
 
     LaunchedEffect(key1 = Unit, block = {
-        delay(2000)
-        isAnimationFinished = true
+        var acceleration =0.0f
+        while (progress < 0.9f) {
+            progress += acceleration
+            acceleration += 0.0001f
+            delay(10)
+        }
     })
 
     LaunchedEffect(key1 = Unit, block = {
         atEnd = true
-        val marquageCreator = fr.sieml.marquagepiquetage.pdf.AndroidPdfMarquageCreator(context)
+        val marquageCreator = AndroidPdfMarquageCreator(context)
         val file = withContext(Dispatchers.IO) {
             marquageCreator.createPdfOnInternalStorage(marquage)
         }
+        progress = 1f
+        delay(100)
 
         if (this.isActive) {
             onPdfCreated(file)

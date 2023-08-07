@@ -213,7 +213,7 @@ public  class PdfMarquageCreator {
 
                 // Si nous sommes à la page 2 ou plus, nous ajoutons l'image
                 XWPFRun run = paragraph.createRun();
-                run.setText("       ");
+                run.setText("     \n\n\n  ");
 
                 run.addPicture(new ByteArrayInputStream(image.getData()), XWPFDocument.PICTURE_TYPE_JPEG, imageUri, Units.toEMU(newWidth), Units.toEMU(newHeight));
 
