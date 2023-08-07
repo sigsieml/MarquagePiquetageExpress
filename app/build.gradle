@@ -11,8 +11,8 @@ android {
         applicationId "fr.sieml.marquagepiquetage"
         minSdk 26
         targetSdk 34
-        versionCode 5
-        versionName "1.21"
+        versionCode 6
+        versionName "1.22"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
