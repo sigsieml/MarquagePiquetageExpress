@@ -25,7 +25,7 @@
     <string name="questionAdresse">Adresse</string>
     <string name="questionAdresseDirections">Remplissez tous les champs</string>
     <string name="questionDateTitle">Date</string>
-    <string name="questionDateDirections">Selectionné une date</string>
+    <string name="questionDateDirections">Selectionner une date</string>
     <string name="questionPhotoTitle">Photo</string>
     <string name="retake_photo">reprendre la photo</string>
     <string name="add_photo">ajouter la photo</string>
