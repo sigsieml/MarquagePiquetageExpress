@@ -7,12 +7,13 @@
     <string name="next">Suivant</string>
     <string name="previous">Précédent</string>
     <string name="done">Terminé</string>
+    <string name="finaldone">"Envoyer l'attestation"</string>
     <string name="back">Retour</string>
     <string name="close">Fermer</string>
     <string name="question_count">\u00A0of %d</string>
     <string name="survey_result_title">Marquage Piquetage</string>
     <string name="survey_result_subtitle">Félicitations, vous avez terminé l\'attestation</string>
-    <string name="survey_result_description">"L'attestation de marquage piquetage va être maintenant envoyé par mail au sieml veuillez maintenant choisir le destinataire"</string>
+    <string name="survey_result_description">"Il faut maintenant envoyer l'attestation par mail au sieml. Veuillez maintenant choisir le destinataire"</string>
     <string name="questionNOperation">N° d\'opération</string>
     <string name="questionLibelleChantier">Libellé Chantier</string>
     <string name="questionTitulaire">Titulaire(Entreprise)</string>
