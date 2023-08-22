@@ -410,10 +410,12 @@ fun SignatureQuestion(
 
     Column(modifier = modifier) {
         Spacer(Modifier.height(32.dp))
-        QuestionTitle(R.string.questionSignatureTitle)
-        R.string.questionSignatureDescription.let {
-            Spacer(Modifier.height(18.dp))
-            QuestionDirections(it)
+        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+            QuestionTitle(R.string.questionSignatureTitle)
+            R.string.questionSignatureDescription.let {
+                Spacer(Modifier.height(18.dp))
+                QuestionDirections(it)
+            }
         }
         Spacer(Modifier.height(18.dp))
         DrawingApp(paddingValues = PaddingValues(0.dp),

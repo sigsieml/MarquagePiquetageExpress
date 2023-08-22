@@ -140,7 +140,7 @@ fun sendMail(file:File, context: Context, marquage: Marquage, mailRecipient: Arr
     intent.data = Uri.parse("mailto:")
     intent.type = "text/plain"
     intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
-    intent.putExtra(Intent.EXTRA_SUBJECT, "Marquage Piquetage")
+    intent.putExtra(Intent.EXTRA_SUBJECT, "Marquage Piquetage N°: " + marquage.numOperation)
     intent.putExtra(Intent.EXTRA_TEXT, "Bonjour,\n\nVeuillez trouver ci-joint l'attestation de marquage piquetage.\n\nCordialement,\n\n${marquage.nomSignataire}")
     val FILE_PROVIDER = "fileprovider"
     val authority = "${context.packageName}.${FILE_PROVIDER}"
