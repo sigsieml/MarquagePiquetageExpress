@@ -60,6 +60,7 @@
     <string name="questionTechnique">Techniques utilisées</string>
     <string name="deletePhoto">supprimer</string>
     <string name="questionNumRueFin">à</string>
+    <string name="modelMail">Bonjour,\n\nVeuillez trouver ci-joint l\'attestation de marquage piquetage.\n\nCordialement,\n\nNOMSIGNATAIRE</string>
 
 
 </resources>

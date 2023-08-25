@@ -46,6 +46,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getString
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
 import fr.sieml.marquagepiquetage.Marquage.Marquage
@@ -141,7 +142,7 @@ fun sendMail(file:File, context: Context, marquage: Marquage, mailRecipient: Arr
     intent.type = "text/plain"
     intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
     intent.putExtra(Intent.EXTRA_SUBJECT, "Marquage Piquetage N°: " + marquage.numOperation)
-    intent.putExtra(Intent.EXTRA_TEXT, "Bonjour,\n\nVeuillez trouver ci-joint l'attestation de marquage piquetage.\n\nCordialement,\n\n${marquage.nomSignataire}")
+    intent.putExtra(Intent.EXTRA_TEXT,  getString(context,R.string.modelMail).replace("NOMSIGNATAIRE", marquage.nomSignataire ))
     val FILE_PROVIDER = "fileprovider"
     val authority = "${context.packageName}.${FILE_PROVIDER}"
     val fileUri: Uri = FileProvider.getUriForFile(context, authority, file)
